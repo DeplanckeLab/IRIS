@@ -1,0 +1,52 @@
+# Title: Config file IRIS scRNA-seq pipeline
+# Author: Joern
+# Date: 21.02.2023
+
+
+# Set parameters of sequence run and experiment 
+userID="pezoldt"
+seqRunID="iris14"
+experimentID="JP202"
+
+# Set location of fastq directory 
+fastq_directory="/data/0_sequencing/sequencing_runs/iris14/bcl/230227_NB500883_0948_AHHNLVBGXN/Data/Fastq/JP202"
+
+# Set location of barcode whitelist used in experiment 
+cellcodes_whitelist="/data/0_sequencing/liquiddrop/scRNAseq_cellcode_whitelist_CC_7bp.txt"
+
+# Set location of barcodes needed for brb toolbox
+cellcodes_BRBtoolbox="/data/0_sequencing/liquiddrop/scRNAseq_cellcode_BRBtoolbox_CC_7bp.txt"
+
+# Set location of pipeline R scripts, i.e. IRIS_scRNA_QC_RCMtoDEG.R, IRIS_scRNA_QC_subsampling.R and IRIS_scRNA_QC_CCsubset.R
+scripts_path="/home/pezoldt/sequencing/1_scripts/iris_bioinf_scRNAseq/IRIS_scRNA_v3/1_pipeline_scRNAseq/IRIS_scRNA_QC_Rscripts"
+
+# Set genome to map to (mouse, human_mouse or human_ERCC_GFP_mCherry) and genome index version
+genome="human_ERCC_GFP_mCherry"
+STAR_index_version="2_7_9a"
+
+# Set location of sample information sheet 
+sample_info_sheet="/home/pezoldt/sequencing/0_seq_run_processing/c_SIS/sis_iris14__mapping_QC_pipeline.csv"
+
+# ERCC used in experiment ? [yes or no]
+ERCC="no"
+
+# Set location of ERCC information 
+ERCC_concentration="/data/genomes/ERCC/20201212_ERCC_concentrations.txt"
+ERCC_gtf="/data/genomes/ERCC/ERCC92.gtf"
+
+# Subsample reads? [yes or no]
+subsampling="no"
+
+# Do you want to perform TFseq on these data? [yes or no]
+TFseq="no"
+
+# If TFseq="yes" provide the following parameter, if "no" comment out
+
+# Set location of TFseq fastq file directory
+TFseq_fastq_directory="/data/sequencing/iris4_TFseq_PBMC_Adipo_snRNA/bcl/210927_NB500883_0782_AH5M5FBGXK/Data/Fastq/151"
+
+# Set full location to genome (STARindex folder)
+TFseq_vector_genome="/data/genomes/TFseqID_vector/STAR_index_2_7_9a"
+
+# Set path to TF barcodes
+TFseq_barcodes="/data/genomes/barcodes/iris_genomics/tf_barcodes.txt"
