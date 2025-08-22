@@ -1,4 +1,6 @@
 # IRIS
+![IRIS workflow to obtain image<>transcriptome paired per cell](X_docs/figures/Workflow_Full.png)
+
 ## Overview
 
 This repository accompanies the manuscript disclosing the technology platform for **integrated robotic imaging and sequencing (IRIS)**.
