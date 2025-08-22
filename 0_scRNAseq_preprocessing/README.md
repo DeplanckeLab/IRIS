@@ -1,5 +1,7 @@
 # Pre-process data
-![IRIS workflow scRNA-seq indexing workflow providing CC, WC and PC per cell, also referred to as "Full_Cell_ID"](X_docs/figures/Workflow_Biochem.png)
+#scRNA-seq pre-processing workflow
+
+![IRIS workflow scRNA-seq indexing workflow providing CC, WC and PC per cell, also referred to as "Full_Cell_ID"](../X_docs/figures/Workflow_Biochem.png)
 ## Obtain Fastq files
 - From **GEO repository**
 
