@@ -1,5 +1,5 @@
 # IRIS
-![IRIS workflow to obtain image<>transcriptome paired per cell](X_docs/figures/Workflow_Full.png)
+![IRIS workflow to obtain image<>transcriptome paired per cell](X_docs/5_figures/Workflow_Full.png)
 
 ## Overview
 
@@ -8,7 +8,7 @@ This repository accompanies the manuscript disclosing the technology platform fo
 - IRIS provides **paired image <> transcriptome per cell** to perform phenomic studies.  
 - The manuscript *(Bues, Pezoldt, Lambert, et al.)* is accessible on **bioRxiv: XXXXXXXXX**.  
 - The **Fastq** and processed sequencing data for scRNA-seq is available at:  
-  ?? [GEO: GSE300918](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE300918)
+  [GEO: GSE300918](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE300918)
 
 ---
 
