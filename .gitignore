@@ -1,0 +1,3 @@
+
+# Ignore input data for Figure 4 for now - It includes large adata object
+2_Cellcycle/Figure_4/input_files/
