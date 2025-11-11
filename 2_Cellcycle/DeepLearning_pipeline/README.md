@@ -7,11 +7,12 @@ We recommend using Python >= 3.7. The file `requirements.txt` contains the libra
 ---
 
 ### Training the model
+The `image2transcriptome.py` script supports 2 split types:
+1. Random splitting: Use argument `--random_split`
+2. Split by batch: Pass arguments `--train_experiments_prefix 'BATCH_PREFIX_TRAIN'` and `--val_experiments_prefix 'BATCH_PREFIX_VAL'`, _e.g._ `BATCH_PREFIX_TRAIN='JP'` indicates that JP's experimental batches will be used for training. The remaining batches that don't match `BATCH_PREFIX_TRAIN` or `BATCH_PREFIX_VAL` will be used for evaluation.
 
-#### Leave one batch out mode (computationally expensive)
-To train the model, run the following command:
 ```
-python loo_image2transcriptome.py
+python image2transcriptome.py
        --data_dir DATA_DIR_PATH
        --out_dir OUT_DIR_PATH
        --dataset 'fucci_3t3_221124'
@@ -25,7 +26,7 @@ python loo_image2transcriptome.py
 ```
 This script trains multiple models in a leave-one-batch-out way and stores predictions for each test batch. 
 
-Here is a description of the main arguments:
+Description of the main arguments:
 * `data_dir`: Path of the directory containing the H5 data.
 * `out_dir`: Path of the directory where the script outputs will be saved.
 * `dataset`: Name of the compiled H5 file.
@@ -42,13 +43,6 @@ Here is a description of the main arguments:
 * `n_folds`: Number of folds. The train data is split into `n_folds`. An independent model will be trained on `n_folds - 1` folds, using the remaining fold for early stopping. This step yields `n_folds` trained models. We run inference on the test set using each of these models and then average the predicted expression profiles.
 * Other parameters include `bs` (batch size), `epochs` (maximum number of training epochs), `lr` (learning rate), and `wd` (weight decay).
 
-*Note:* This mode does not yet support training with multiple channels as input (TODO).
-
-#### Standard mode (more efficient)
-The script `image2transcriptome.py` is similar, i.e. the main difference is that it uses a single (i.e. fixed) test split. The `image2transcriptome.py` script supports 2 split types:
-1. Random splitting: Use argument `--random_split`
-2. Split by batch: Pass arguments `--train_experiments_prefix 'BATCH_PREFIX_TRAIN'` and `--val_experiments_prefix 'BATCH_PREFIX_VAL'`, _e.g._ `BATCH_PREFIX_TRAIN='JP'` indicates that JP's experimental batches will be used for training. The remaining batches that don't match `BATCH_PREFIX_TRAIN` or `BATCH_PREFIX_VAL` will be used for evaluation.
-
 **About the other scripts**
 The script `loo_image2transcriptome_feature.py` similarly trains baseline models based on predefined features that can be specified via the `feature_name` argument (supported arguments: `size`, `roundness`, `eccentricity`, `axis_minor`, and `axis_major`).
 
@@ -64,11 +58,3 @@ By default, for each training seed, the training script:
 5. Saves the trained models for each training fold, if `save_model` is provided.
 
 The notebook `comparison_loo.ipynb` and `comparison.ipynb` visualize the Pearson correlation scores for multiple channels and seeds.
-
----
-
-### TODO
-- [x] Implement alternative model. The idea would be to plug Shuo's pretrained encoder into this pipeline.
-- [ ] MAE model with multiple channels as input.
-- [ ] Update `loo_image2transcriptome.py` script to train using multiple channels as input.
-- [ ] Implement zero-inflated negative binomial loss function to directly model read counts. This should allow us to explicitly model of the excess of zeros, i.e. the model would infer the mean, dispersion, and dropout probabilities of each gene conditioned on the cell image.
