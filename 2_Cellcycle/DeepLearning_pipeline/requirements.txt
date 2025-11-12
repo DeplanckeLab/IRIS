@@ -15,3 +15,4 @@ torch==2.6.0
 torchvision==0.21.0
 tqdm==4.67.1
 umap-learn==0.5.7
+albumentations==2.0.8
