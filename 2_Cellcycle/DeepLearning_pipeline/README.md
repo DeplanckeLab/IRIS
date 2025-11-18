@@ -2,7 +2,7 @@
 
 ### Installation
 
-We recommend using Python 3.12. Replace '<ENV_NAME>' with name of choice.
+We recommend using Python 3.12. Replace `<ENV_NAME>` with name of choice.
 ~~~
 conda create -n <ENV_NAME> python=3.12 -y
 conda activate <ENV_NAME>
