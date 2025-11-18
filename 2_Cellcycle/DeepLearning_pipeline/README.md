@@ -2,8 +2,12 @@
 
 ### Installation
 
-We recommend using Python >= 3.7. The file `requirements.txt` contains the library versions of our environment. To install all the packages, run `pip install -r requirements.txt`.
-
+We recommend using Python 3.12. Replace <ENV_NAME> with name of choice.
+~~~
+conda create -n <ENV_NAME> python=3.12 -y
+conda activate <ENV_NAME>
+pip install -r requirements.txt
+~~~
 ---
 
 ### Training the model
