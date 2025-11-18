@@ -48,6 +48,15 @@ The script `loo_image2transcriptome_feature.py` similarly trains baseline models
 
 ---
 
+### Example calls
+Replace:
+- Dataset location: <DATASET_PATH>
+- Dataset name: <DATASET_NAME>
+~~~
+python image2transcriptome.py --data_dir <DATASET_PATH> --out_dir ./test_results --dataset <DATASET_NAME> --channel '405' --apply_segmentation_mask --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+~~~
+---
+
 ### Visualizing the results
 
 By default, for each training seed, the training script:
