@@ -2,8 +2,12 @@
 
 ### Installation
 
-We recommend using Python >= 3.7. The file `requirements.txt` contains the library versions of our environment. To install all the packages, run `pip install -r requirements.txt`.
-
+We recommend using Python 3.12. Replace `<ENV_NAME>` with name of choice.
+~~~
+conda create -n <ENV_NAME> python=3.12 -y
+conda activate <ENV_NAME>
+pip install -r requirements.txt
+~~~
 ---
 
 ### Training the model
@@ -46,6 +50,15 @@ Description of the main arguments:
 **About the other scripts**
 The script `loo_image2transcriptome_feature.py` similarly trains baseline models based on predefined features that can be specified via the `feature_name` argument (supported arguments: `size`, `roundness`, `eccentricity`, `axis_minor`, and `axis_major`).
 
+---
+
+### Example calls
+Replace:
+- Dataset location: <DATASET_PATH>
+- Dataset name: <DATASET_NAME>
+~~~
+python image2transcriptome.py --data_dir <DATASET_PATH> --out_dir ./test_results --dataset <DATASET_NAME> --channel '405' --apply_segmentation_mask --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+~~~
 ---
 
 ### Visualizing the results
