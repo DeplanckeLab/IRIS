@@ -7,3 +7,4 @@ pip install -r requirements.txt
 pip install ipykernel
 python -m ipykernel install --user --name <ENV_NAME> --display-name "<ENV_NAME>"
 ~~~
+The environment should now show up in jupyter-hub as kernel.
