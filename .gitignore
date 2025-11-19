@@ -7,3 +7,6 @@
 
 # Ignore temporary notebooks
 .ipynb_checkpoints
+
+# Ignore .h5 preprocessed files (to be downloaded)
+*.h5
