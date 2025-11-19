@@ -7,6 +7,7 @@
 
 # Ignore temporary notebooks
 .ipynb_checkpoints
+__pycache__
 
 # Ignore .h5 preprocessed files (to be downloaded)
 *.h5
