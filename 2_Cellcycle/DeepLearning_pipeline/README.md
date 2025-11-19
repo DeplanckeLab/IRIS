@@ -63,7 +63,7 @@ python image2transcriptome.py --data_dir <DATASET_PATH> --out_dir ./results --da
 ~~~
 Cell shape CNN model:
 ~~~
-python image2transcriptome.py --data_dir <DATASET_PATH> --out_dir ./results --dataset <DATASET_NAME> --channel 'seg' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+python image2transcriptome.py --data_dir <DATASET_PATH> --out_dir ./results --dataset <DATASET_NAME> --channel 'seg' --train_augmentations 'random_rotation' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
 ~~~
 Angular MLP model
 ~~~
