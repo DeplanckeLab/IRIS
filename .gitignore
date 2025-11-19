@@ -4,3 +4,6 @@
 
 # Ignore input data for Figure 6 for now - It includes large adata object
 3_Tcells/Figure_6/input_files/
+
+# Ignore temporary notebooks
+.ipynb_checkpoints
