@@ -1,13 +1,9 @@
 # Pre-process data
-#scRNA-seq pre-processing workflow
-
+## scRNA-seq pre-processing workflow
 ![IRIS workflow scRNA-seq indexing workflow providing CC, WC and PC per cell, also referred to as "Full_Cell_ID"](../X_docs/5_figures/Workflow_Biochem.png)
-## Obtain Fastq files
-- From **GEO repository**
 
-## Index genome
-- Index genome of interest and directory to genome in script  
-  `IRIS_scRNA_QC_pipeline….sh` (for **STAR 2.7.9a**)
+## Obtain Fastq files
+- From **GEO repository** [GEO: GSE300918](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE300918)
 
 ---
 
