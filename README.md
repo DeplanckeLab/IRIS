@@ -17,9 +17,9 @@ This repository accompanies the manuscript disclosing the technology platform fo
 The repository contains:
 
 - **Pre-processing and QC pipeline** for IRIS-derived scRNA-seq data  
-  - `scRNAseq_preprocessing`
+  - **[scRNAseq preprocessing](./0_scRNAseq_preprocessing)**
 
 - **Analysis and visualization code** for sections in the manuscript:  
-  - **Benchmarking** (Figure 2 & 3)  
-  - **Cell cycle** (Figure 4 & 5)  
-  - **T cells** (Figure 6)
+  - **[Benchmarking](./1_scRNAseq_benchmarking)** (Figure 2 & 3)  
+  - **[Cell cycle](./2_Cellcycle)** (Figure 4 & 5)  
+  - **[T cells](./3_Tcells)** (Figure 6)
