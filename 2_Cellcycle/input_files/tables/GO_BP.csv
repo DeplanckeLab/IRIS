@@ -1,0 +1,11 @@
+﻿Index,Name,P-value,Adjusted p-value,Odds Ratio,Combined Score
+1,External Encapsulating Structure Organization (GO:0045229),0.000001325,0.001115,5.45,73.78
+2,Extracellular Structure Organization (GO:0043062),0.000001325,0.001115,5.45,73.78
+3,Regulation of Cell Migration (GO:0030334),0.000001603,0.001115,2.75,36.72
+4,Positive Regulation of Cell Migration (GO:0030335),0.00001593,0.008311,2.86,31.55
+5,Extracellular Matrix Organization (GO:0030198),0.00002706,0.0113,3.64,38.3
+6,Nervous System Development (GO:0007399),0.00003259,0.01134,2.46,25.38
+7,Regulation of Endothelial Cell Chemotaxis (GO:2001026),0.00005931,0.01768,15.53,151.19
+8,Neural Crest Cell Development (GO:0014032),0.0001199,0.02589,7.27,65.62
+9,Positive Regulation of Cell Differentiation (GO:0045597),0.0001296,0.02589,2.73,24.47
+10,Branchiomotor Neuron Axon Guidance (GO:0021785),0.0001749,0.02589,55.74,482.22

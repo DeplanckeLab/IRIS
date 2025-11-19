@@ -1,0 +1,11 @@
+﻿Index,Name,P-value,Adjusted p-value,Odds Ratio,Combined Score
+1,Collagen-Containing Extracellular Matrix (GO:0062023),9.98E-09,0.000001896,3.52,64.88
+2,Endoplasmic Reticulum Lumen (GO:0005788),5.67E-08,0.000005388,3.79,63.25
+3,Intracellular Organelle Lumen (GO:0070013),0.00004235,0.002558,2,20.17
+4,Cell-Substrate Junction (GO:0030055),0.00005385,0.002558,2.57,25.27
+5,Focal Adhesion (GO:0005925),0.0001035,0.00338,2.51,23.05
+6,Secretory Granule Lumen (GO:0034774),0.0001067,0.00338,2.7,24.67
+7,Ficolin-1-Rich Granule Lumen (GO:1904813),0.005304,0.144,2.95,15.46
+8,Adherens Junction (GO:0005912),0.006796,0.1614,2.65,13.24
+9,Platelet Alpha Granule (GO:0031091),0.009658,0.1903,3.14,14.59
+10,Cell-Cell Junction (GO:0005911),0.01002,0.1903,2,9.21

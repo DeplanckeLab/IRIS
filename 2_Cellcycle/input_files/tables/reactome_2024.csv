@@ -1,0 +1,11 @@
+﻿Index,Name,P-value,Adjusted p-value,Odds Ratio,Combined Score
+1,Extracellular Matrix Organization,9.74E-11,1.07E-07,4.46,102.86
+2,Smooth Muscle Contraction,0.000001783,0.0009815,9.65,127.73
+3,Assembly of Collagen Fibrils and Other Multimeric Structures,0.000003997,0.001467,7.37,91.56
+4,Signaling by Receptor Tyrosine Kinases,0.000006348,0.001509,2.52,30.15
+5,Uptake and Function of Diphtheria Toxin,0.000006855,0.001509,74.46,885.36
+6,Integrin Cell Surface Interactions,0.00001405,0.002577,5.59,62.44
+7,Collagen Chain Trimerization,0.00001694,0.002664,8.32,91.43
+8,Non-integrin membrane-ECM Interactions,0.00002225,0.002782,6.75,72.3
+9,Collagen Formation,0.00002433,0.002782,5.23,55.6
+10,Post-translational Protein Phosphorylation,0.00002526,0.002782,4.75,50.31
