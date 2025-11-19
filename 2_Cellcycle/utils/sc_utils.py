@@ -107,7 +107,7 @@ def get_image_by_cid(cell_id_list, channel, h5_path):
 
 def gen_montage_multich(cell_id_list, channel, h5_path, anno_list = None, ch_sep=False, verbose=True):
     img_dict = {ch: [] for ch in channel.keys()}
-    with h5py.File(h5_path, 'a') as dataset:
+    with h5py.File(h5_path, 'r') as dataset:
         if anno_list == 'cid':
             anno_list = cell_id_list
         if anno_list and len(anno_list) != len(cell_id_list):
