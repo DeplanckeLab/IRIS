@@ -4,9 +4,9 @@
 This folder containes all scripts to train the cell shape CNN, nucleus CNN, and fucci angle MLP. Scripts are run in the following order:
 
 1. Training of models:
-       - CNN models: `image2transcriptome.py`
-       - MLP models: `image2transcriptome_feature.py`
-2. Results are then compiled in the following notebook: `compile_scores.ipynb`
+- CNN models: `image2transcriptome.py`
+- MLP models: `image2transcriptome_feature.py`
+3. Results are then compiled in the following notebook: `compile_scores.ipynb`
 
 ### Installation
 
