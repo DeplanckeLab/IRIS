@@ -28,10 +28,10 @@ parser.add_argument('--seeds', default=[0, 1, 2], nargs='+')
 parser.add_argument('--suffix', default=None)
 parser.add_argument('--data_dir')
 parser.add_argument('--out_dir')
-parser.add_argument('--feature_name', default='roundness')
+parser.add_argument('--feature_name', default='fucci_angle')
 parser.add_argument('--feature_names', default=None, nargs='+')
 parser.add_argument('--fit_method', default='linear')
-parser.add_argument('--dataset', default='fucci_3t3_221124')
+parser.add_argument('--dataset')
 parser.add_argument('--cell_types', default=None, nargs='+')
 parser.add_argument('--species', default=None, nargs='+')
 parser.add_argument('--exclude_batches', default=None, nargs='+')
@@ -170,31 +170,8 @@ def train_and_store_results(args, adata_subset, imgs, seg_masks, split_idxs, see
         else:
             feature_values = []
             for feature_name in feature_names:
-                if feature_name == 'roundness':
-                    area = props[0].area 
-                    perimeter = props[0].perimeter
-                    feature_value = (4 * np.pi * area) / (perimeter ** 2)
-                elif feature_name == 'eccentricity':
-                    feature_value = props[0].eccentricity
-                elif feature_name == 'axis_minor':
-                    feature_value = props[0].axis_minor_length
-                elif feature_name == 'axis_major':
-                    feature_value = props[0].axis_major_length
-                elif feature_name == 'solidity':
-                    feature_value = props[0].solidity
-                elif feature_name == 'size':
-                    # feature_value = props[0].area
-                    feature_value = np.mean((m > 0).astype(int))
-                elif feature_name == 'fucci_angle':
+                if feature_name == 'fucci_angle':
                     feature_value = adata_subset[i].obs['fucci_angle'].values.ravel()[0]
-                elif feature_name == 'kurtosis':
-                    feature_value = kurtosis(masked_pixels, fisher=True, bias=False)
-                elif feature_name == 'maes_max':
-                    feature_value = np.max(masked_pixels) / 65535
-                elif feature_name == 'maes_mean':
-                    feature_value = np.mean(masked_pixels) / 65535
-                elif feature_name == 'maes_var':
-                    feature_value = np.var(masked_pixels / 65535)
                 else:  
                     raise ValueError(f'Unknown feature name: {feature_name}')
                 feature_values.append(feature_value)
