@@ -38,23 +38,11 @@ work_dir <- args[1]
 expID <- args[2]
 #expID <- "JP280"
 
-ERCC <- args[3]
-#ERCC <- "no"
-
 barcodes_wl <- args[4]
 #barcodes_wl <- "/home/pezoldt/NAS2/iris/4_genomes/barcodes/iris_genomics/20210618_scRNAseq_cellcode_whitelist_CC_7bp.txt"
 
-barcodes_file <- args[5]
-#barcodes_file <- "/home/pezoldt/NAS2/iris/4_genomes/barcodes/iris_genomics/20210618_scRNAseq_cellcode_BRBtoolbox_CC_7bp.txt"
-
 sample_info_sheet <- args[6]
 #sample_info_sheet <- "/home/pezoldt/NAS2/iris/0_seq_run_processing/c_SIS/sis_aris03_mapping_QC_pipeline_v2.csv"
-
-ERCC_concentrations <- args[7]
-#ERCC_concentrations <- "/home/pezoldt/NAS2/iris/4_genomes/genomes/ERCC/20201212_ERCC_concentrations.txt"
-
-ERCC_gtf <- args[8]
-#ERCC_gtf <- "/home/pezoldt/NAS2/iris/4_genomes/genomes/ERCC/ERCC92.GeneAdded.mCherry.EGFP.gtf"
 
 # Print status of script 
 cat("Read arguments from command line:\n")
@@ -89,36 +77,6 @@ min_UMI <- 1000
 
 # Load barcodes to CC file
 t_barcodes_file <- read.delim(barcodes_file)
-
-## Load ERCC information files 
-
-# Load files with ERCC information
-ERCC_concentrations <- read.delim(ERCC_concentrations)
-ERCC_gtf <- read.delim(ERCC_gtf, header = FALSE)
-
-# Set colanmes 
-colnames(ERCC_gtf) <- c("ID", "content", "region", "chr", "length",
-                        "k1", "k2", "k3", "k4")
-
-# Merge file information 
-ERCC_intel <- merge(ERCC_concentrations, ERCC_gtf, by.x = "ERCC.ID", by.y = "ID")
-
-
-## Add number of ERCC molecules 
-
-# Volume of ... per droplet in nl
-volume <- 2.5
-
-# Dilution (in 1000ul, used 1ul from 1:10 diluted stock)
-dilution <- 10
-
-# Molecules per attomol
-attomol <- 6.022*10^23 * 10^(-18)
-
-# Calculate ERCC molecules per droplet for two mixes 
-ERCC_intel$Molecules_Droplet_Mix1 <- round((ERCC_intel$concentration.in.Mix.1..attomoles.ul. * attomol / dilution) / (1000 * 1000 * volume),3)
-ERCC_intel$Molecules_Droplet_Mix2 <- round((ERCC_intel$concentration.in.Mix.2..attomoles.ul. * attomol / dilution) / (1000 * 1000 * volume),3)
-
 
 ## Create sample information with one row per cell 
 
@@ -570,85 +528,25 @@ UMI_stats <- lapply(seq_along(UMI_SYMB_list), function(x){
   
   # Check if table only has only one column = one CC per weill
   if(ncol(UMI_table) == 1){
-    
-    # Get number of ERCC per cell 
-    n_UMI_ERCC <- as.vector(sum(UMI_table[grepl("ERCC-00", rownames(UMI_table)),]))
-    
-    # Get number of mitochondrial UMI per cell 
-    #n_UMI_mito <- as.vector(sum(UMI_table[grepl("^MT-", rownames(UMI_table)),]))
-    
+
     # Get number of UMI per cell (= sum all counts per cell)
     n_UMI <- as.vector(sum(UMI_table))
     
     # Get number of detected genes per cell (i.e. amount of genes with a count > 0)
     n_genes <- apply(UMI_table, 2, function(x){sum(x > 0)})
-    
-    # Get number of detected mitochondrial genes per cell 
-    #n_genes_mito <- as.data.frame(UMI_table[which(grepl("MT-", rownames(UMI_table))), ])
-    #n_genes_mito <- apply(n_genes_mito, 2, function(x){sum(x > 0)})
-    
-    # Percentage of mito UMI 
-    #UMI_mito_percent <- n_UMI_mito/n_UMI
-    
-    #Percentage of mito genes 
-    #mito_percentage <- n_genes_mito/n_genes
+  
     
     # more than one CC per well  
   }else{
-    
-    # Get number of ERCC per cell 
-    n_UMI_ERCC <- colSums(UMI_table[grepl("ERCC-00", rownames(UMI_table)),])
-    
-    # Get number of mitochondrial UMI per cell 
-    #n_UMI_mito <- colSums(UMI_table[grepl("^MT-", rownames(UMI_table)),])
-    
+   
     # Get number of UMI per cell (= sum all counts per cell)
     n_UMI <- colSums(UMI_table)
     
     # Get number of detected genes per cell (i.e. amount of genes with a count > 0)
     n_genes <- apply(UMI_table, 2, function(x){sum(x > 0)})
-    
-    # Get number of detected mitochondrial genes per cell 
-    #n_genes_mito <- UMI_table[which(grepl("^MT-", rownames(UMI_table))), ]
-    #n_genes_mito <- apply(n_genes_mito, 2, function(x){sum(x > 0)})
-    
-    # Percentage of mito UMI 
-    #UMI_mito_percent <- n_UMI_mito/n_UMI
-    
-    #Percentage of mito genes 
-    #mito_percentage <- n_genes_mito/n_genes
+
     
   }
-  
-  # Create dataframe of stats 
-  if(ERCC  == "yes"){
-    
-    temp_umi <- data.frame(n_UMI = n_UMI,
-                           n_UMI_ERCC = n_UMI_ERCC,
-                           #n_UMI_mito = n_UMI_mito,
-                           n_genes = n_genes,
-                           #n_genes_mito = n_genes_mito,
-                           #percent_UMI_mito = UMI_mito_percent,
-                           #percent_genes_mito = mito_percentage,
-                           Full_Cell_ID = paste0(names(n_genes)))
-    
-    return(temp_umi)
-    
-  }else{
-    
-    temp_umi <- data.frame(n_UMI = n_UMI,
-                           #n_UMI_mito = n_UMI_mito,
-                           n_genes = n_genes,
-                           #n_genes_mito = n_genes_mito,
-                           #percent_UMI_mito = UMI_mito_percent,
-                           #percent_genes_mito = mito_percentage,
-                           Full_Cell_ID = paste0(names(n_genes)))
-    
-    return(temp_umi)
-    
-  }
-  
-})
 
 # Create one data frame of all UMI stats per cell
 UMI_stats <- do.call(rbind, UMI_stats)
@@ -665,36 +563,14 @@ UMI_stats_detected_CellCodes <- lapply(seq_along(UMI_allDetected_CCs_SYMB_list),
   # Check if table only has only one column = one CC per weill
   if(ncol(UMI_table) == 1){
     
-    # Get number of ERCC per cell 
-    n_UMI_ERCC <- as.vector(sum(UMI_table[grepl("ERCC-00", rownames(UMI_table)),]))
-    
-    # Get number of mitochondrial UMI per cell 
-    #n_UMI_mito <- as.vector(sum(UMI_table[grepl("^MT-", rownames(UMI_table)),]))
-    
     # Get number of UMI per cell (= sum all counts per cell)
     n_UMI <- as.vector(sum(UMI_table))
     
     # Get number of detected genes per cell (i.e. amount of genes with a count > 0)
     n_genes <- apply(UMI_table, 2, function(x){sum(x > 0)})
-    
-    # Get number of detected mitochondrial genes per cell 
-    #n_genes_mito <- as.data.frame(UMI_table[which(grepl("MT-", rownames(UMI_table))), ])
-    #n_genes_mito <- apply(n_genes_mito, 2, function(x){sum(x > 0)})
-    
-    # Percentage of mito UMI 
-    #UMI_mito_percent <- n_UMI_mito/n_UMI
-    
-    #Percentage of mito genes 
-    #mito_percentage <- n_genes_mito/n_genes
-    
+        
     # more than one CC per well  
   }else{
-    
-    # Get number of ERCC per cell 
-    n_UMI_ERCC <- colSums(UMI_table[grepl("ERCC-00", rownames(UMI_table)),])
-    
-    # Get number of mitochondrial UMI per cell 
-    #n_UMI_mito <- colSums(UMI_table[grepl("^MT-", rownames(UMI_table)),])
     
     # Get number of UMI per cell (= sum all counts per cell)
     n_UMI <- colSums(UMI_table)
@@ -702,47 +578,7 @@ UMI_stats_detected_CellCodes <- lapply(seq_along(UMI_allDetected_CCs_SYMB_list),
     # Get number of detected genes per cell (i.e. amount of genes with a count > 0)
     n_genes <- apply(UMI_table, 2, function(x){sum(x > 0)})
     
-    # Get number of detected mitochondrial genes per cell 
-    #n_genes_mito <- UMI_table[which(grepl("^MT-", rownames(UMI_table))), ]
-    #n_genes_mito <- apply(n_genes_mito, 2, function(x){sum(x > 0)})
-    
-    # Percentage of mito UMI 
-    #UMI_mito_percent <- n_UMI_mito/n_UMI
-    
-    #Percentage of mito genes 
-    #mito_percentage <- n_genes_mito/n_genes
-    
   }
-  
-  # Create dataframe of stats 
-  if(ERCC  == "yes"){
-    
-    temp_umi <- data.frame(n_UMI = n_UMI,
-                           n_UMI_ERCC = n_UMI_ERCC,
-                           #n_UMI_mito = n_UMI_mito,
-                           n_genes = n_genes,
-                           #n_genes_mito = n_genes_mito,
-                           #percent_UMI_mito = UMI_mito_percent,
-                           #percent_genes_mito = mito_percentage,
-                           Full_Cell_ID = paste0(names(n_genes)))
-    
-    return(temp_umi)
-    
-  }else{
-    
-    temp_umi <- data.frame(n_UMI = n_UMI,
-                           #n_UMI_mito = n_UMI_mito,
-                           n_genes = n_genes,
-                           #n_genes_mito = n_genes_mito,
-                           #percent_UMI_mito = UMI_mito_percent,
-                           #percent_genes_mito = mito_percentage,
-                           Full_Cell_ID = paste0(names(n_genes)))
-    
-    return(temp_umi)
-    
-  }
-  
-})
 
 # Create one data frame of all UMI stats per cell
 UMI_stats_detected_CellCodes <- do.call(rbind, UMI_stats_detected_CellCodes)
@@ -766,11 +602,6 @@ pivot_table <- inner_join(SIS_exp_perCell, merged_stats, by = "Full_Cell_ID")
 
 # Add ratio UMI to mapped reads
 pivot_table$ratio_UMI_to_mapped_reads <- pivot_table$n_UMI / pivot_table$n_mapped_reads
-
-# Add percentage of ERCC
-if(ERCC == "yes"){
-  pivot_table$percent_UMI_ERCC <- pivot_table$n_UMI_ERCC/pivot_table$n_UMI * 100
-}
 
 cat("Pivot table created\n")
 
@@ -805,84 +636,6 @@ meta_lid <- do.call(rbind, l_meta_lid_addon)
 pivot_table <- meta_lid
 
 #######################################
-#### Data preparation for plotting ####
-#######################################
-
-## Filtered read count/UMI matrices 
-
-# Apply threshhold for UMI and create separated ERCC objects
-#Note: If ERCC section of the pipeline is to be used it is required to pull data from the STARsolo output
-#Note: The BRBseqtools output is obsolete
-#if(ERCC == "yes"){
-  
-  # Filter out cells with less than 1000 UMI 
-  #pivot_UMI_tresh <- subset(pivot_table, n_UMI > min_UMI)
-  
-  # Create filtered RCM of mapped reads (filtered by UMI threshhold)
-  #rcm_mapped_threshed <- rcm_all_cells[,colnames(rcm_all_cells) %in% pivot_UMI_tresh$Full_Cell_ID]
-  
-  # Exclude ERCCs from mapped RCM and save them separately 
-  #rcm_mapped_ERCC <- rcm_mapped_threshed[grepl("ERCC-", rownames(rcm_mapped_threshed)),]
-  #rcm_mapped_endogenous <- rcm_mapped_threshed[!(grepl("ERCC-",rownames(rcm_mapped_threshed))),]
-  
-  # Create filtered RCM of UMI 
-  #rcm_UMI_threshed <- UMI_all_cells_SYMB[,colnames(UMI_all_cells_SYMB) %in% pivot_UMI_tresh$Full_Cell_ID]
-  
-  # Exclude ERCCs filtered UMI matrix and save them separately 
-  #rcm_UMI_ERCC <- rcm_UMI_threshed[grepl("ERCC-", rownames(rcm_UMI_threshed)),]
-  #rcm_UMI_endogenous <- rcm_UMI_threshed[!(grepl("ERCC-", rownames(rcm_UMI_threshed))),]
-  
-#}else{
-  
-  # Filter out cells with less than 1000 UMI 
-  #pivot_UMI_tresh <- subset(pivot_table, n_UMI > min_UMI)
-  
-  # Create filtered RCM of mapped reads (filtered by UMI threshhold)
-  #rcm_mapped_threshed <- rcm_all_cells[,colnames(rcm_all_cells) %in% pivot_UMI_tresh$Full_Cell_ID]
-  
-  # Create filtered RCM of UMI 
-  #rcm_UMI_threshed <- UMI_all_cells_SYMB[,colnames(UMI_all_cells_SYMB) %in% pivot_UMI_tresh$Full_Cell_ID]
-#}
-
-
-#######################################
-##### Additional ERCC stats ###########
-#######################################
-
-## ERCC per cell according to abundance
-
-#if(ERCC == "yes"){
-  
-  # Get order of ERCCs by abundance of each ERCC across all cells 
-  #ERCC_order <- names(sort(rowSums(rcm_UMI_ERCC)))
-  
-  # Order ERCC by abundance 
-  #rcm_UMI_ERCC_order <- rcm_UMI_ERCC[ERCC_order,]
-  #pivot_ERCC <- as.data.frame(rcm_UMI_ERCC_order)
-  
-  # Add ERCC ID as column
-  #pivot_ERCC$ERCC_ID <- rownames(pivot_ERCC)
-  
-  # Create overview of ERCC count per cell 
-  #pivot_ERCC <- pivot_longer(pivot_ERCC, cols = 1:ncol(rcm_UMI_ERCC_order), names_to = "Cell", values_to = "UMI_ERCC")
-  
-  # Add log10 of ERCC_UMI
-  #pivot_ERCC$log10_UMI_ERCC <- log10(pivot_ERCC$UMI_ERCC + 1)
-  
-  # Change ERCC_ID column to factor 
-  #pivot_ERCC$ERCC_ID <- as.factor(pivot_ERCC$ERCC_ID)
-  
-  # Save ERCC pivot table as data frame
-  #pivot_ERCC <- as.data.frame(pivot_ERCC)
-  
-  # Get mean per ERCC across all cells 
-  #ERCC_UMI_mean <- data.frame(ERCC.ID = rownames(rcm_UMI_ERCC), mean_UMI_ERCC_detected = rowMeans(rcm_UMI_ERCC))
-  
-  # Merge ERCC information with mean value 
-  #ERCC_intel_UMI_mean <- merge(ERCC_intel, ERCC_UMI_mean, by = "ERCC.ID")
-#}
-
-#######################################
 ##### Additional SIS intel ############
 #######################################
 SIS_store <- merge(SIS_store, t_store_CC_state, by.x = "Sample_ID_2", by.y = "Sample_ID", all=TRUE)
@@ -898,16 +651,8 @@ colnames(SIS_store)[1] <- "Sample_ID"
 #######################################
 
 ## Save object needed for plotting in one file
+save(pivot_table, UMI_all_cells_SYMB, UMI_all_cells_ENSG, UMI_stats_detected_CellCodes, file = file.path(objects_path, "objects_plotting.RData"))
 
-#if(ERCC == "yes"){
-  
- # save(pivot_table, rcm_all_cells, UMI_all_cells_SYMB, UMI_all_cells_ENSG, UMI_stats_detected_CellCodes, unknown_barcodes, pivot_UMI_tresh, rcm_mapped_threshed, rcm_UMI_threshed, 
-  #     rcm_mapped_endogenous, rcm_UMI_endogenous, rcm_mapped_ERCC, rcm_UMI_ERCC, pivot_ERCC, ERCC_intel_UMI_mean, file = file.path(objects_path, "objects_plotting.RData"))
-  
-#}else{
-  
-  save(pivot_table, UMI_all_cells_SYMB, UMI_all_cells_ENSG, UMI_stats_detected_CellCodes, file = file.path(objects_path, "objects_plotting.RData"))
-#}
 
 
 ## Save the pivot table seperately 

@@ -23,3 +23,5 @@ The repository contains:
   - **[Benchmarking](./1_scRNAseq_benchmarking)** (Figure 2 & 3)  
   - **[Cell cycle](./2_Cellcycle)** (Figure 4 & 5)  
   - **[T cells](./3_Tcells)** (Figure 6)
+
+- **Miscallaneous(./X_docs)** includes envs, barcodes, functions, expression signatures and illustrations

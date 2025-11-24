@@ -18,9 +18,11 @@
 - Identify whether sequencing was performed on:
   - **NextSeq500** (`irisXXX`)
   - **AVITI** (`arisXXX`)
+  - Note: Use pipeline as per sequencing run indicated in sample_info_sheets
 - Use:
   - `IRIS_scRNA_QC_pipeline_AVITI_R1_16bp.sh` (for AVITI)
   - `IRIS_scRNA_QC_pipeline_NextSeq_R1_16bp.sh` (for NextSeq500)
+
 
 ## Run pipeline
 
@@ -32,3 +34,14 @@
 ```bash
 nohup bash /home/userID/sequencing/1_scripts/iris_scRNAseq/1_1_scRNA-seq/1_pipeline_scRNAseq/IRIS_scRNA_QC_pipeline_NextSeq_R1_16bp.sh \
   -c /home/userID/sequencing/2_config_files/FolderName/config_file_example.txt &
+
+**Process in pipeline:**
+- Mapping and demultiplexing per CellCode via "STAR solo" per Well
+- Compilation of count matrix and QC statistics across all plates and well per experiment
+
+**Output:**
+- "UMI_all_cells_SYMB.txt" UMI count matrix
+- "pivot_table.txt" QC statistics per cell
+- Folder "mtx": UMI count matrix
+
+ 
