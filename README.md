@@ -1,5 +1,5 @@
 # IRIS
-![IRIS workflow to obtain image<>transcriptome paired per cell](X_docs/5_figures/Workflow_Full.png)
+![IRIS workflow to obtain image<>transcriptome paired per cell](X_docs/4_illustrations/Workflow_Full.png)
 
 ## Overview
 
