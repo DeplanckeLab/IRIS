@@ -26,8 +26,8 @@ library(topGO)
 
 
 #load custom functions around scRNA-seq with IRIS, imaging and tools used for analysis
-source("/home/pezoldt/NAS2/iris/1_scripts/iris_scRNAseq/2_functions/scRNA-seq/seuratV5.R")
-source("/home/pezoldt/NAS2/iris/1_scripts/iris_scRNAseq/2_functions/scRNA-seq/support_transcriptome_integration.R")
+source(".../IRIS/X_docs/1_functions/seuratV5.R")
+source("/IRIS/X_docs/1_functions/support_transcriptome_integration.R")
 
 #####
 #Set PATHs
@@ -39,26 +39,20 @@ analysisID <- "2024_PBMCs"
 sample_ids_IRIS <- c("JP278", "NG039", "NG042", "NG050")
 sample_ids <- c(sample_ids_IRIS)
 #Define paths
-PATH_input_IRIS_sequencing <- paste0("/home/",userID,"/updepla/projects/iris/4_sequencing_analysis")
-PATH_input_IRIS_imaging <- paste0("/home/",userID,"/updepla/projects/iris/6_imaging_analysis")
+PATH_signature <- ".../IRIS/X_docs/3_signatures_genes"
+PATH_input_IRIS_sequencing <- paste0("PATH_to_folder_with_count_matrices")
+PATH_input_IRIS_imaging <- paste0(".../IRIS/3_Tcells/visualization/PBMC/image_annotation/manual")
 
-PATH_output <- paste0("/home/",userID,"/updepla/projects/iris/4_sequencing_analysis/0_Combined/",analysisID,"/results")
+PATH_output <- paste0("PATH_to_output")
 PATH_output_figures <- paste0(PATH_output,"/plots")
 PATH_output_objects <- paste0(PATH_output,"/objects")
 PATH_output_tables <- paste0(PATH_output,"/tables")
-
-#####
-#Seurat object load
-#####
-seurat.object <- readRDS(paste0(PATH_output_objects,"/",analysisID,"_manuscript_nuclearshapeannotation.Rds"))
 
 ########
 #Signatures
 ########
 #Path signatures
 PATH_signature <- "/home/pezoldt/NAS2/iris/1_scripts/iris_scRNAseq/3_signatures_genes"
-#Signatures PBMCs
-signatures.PBMCs <- read.delim(paste0(PATH_signature, "/Tim_extended_PBMC_sig.txt"), sep = "\t")
 # Signatures cell cycle
 signature_cell_cycle_human_mouse <- readRDS(paste0(PATH_signature,
                                                    "/signature_cell_cycle_human_mouse.Rds"))

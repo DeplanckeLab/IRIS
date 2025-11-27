@@ -8,10 +8,10 @@
 #####
 #Load
 #####
-stripy_scanpy_log2fc <- read.delim(".......scanpy_to_R/DEGs_CD8_Naive_stripy_scanpbyELISA.logFC_filt.txt")
-normi_scanpy_log2fc <- read.delim(".......scanpy_to_R//DEGs_CD8_Naive_normi_scanpbyELISA.logFC_filt.txt")
-gene_universe_all <- read.delim(".......scanpy_to_R//genes_CD8_human_donors.txt")$X0
-gene_universe_forDEGs <- read.delim(".......scanpy_to_R//genes_CD8_human_donors_naive_forDEGs.txt")$names
+stripy_scanpy_log2fc <- read.delim("......./IRIS/3_Tcells/visualization/Tcells_CD8/CD8_GeneOntology/scanpy_to_R/DEGs_CD8_Naive_stripy_fromSCANPY.logFC_filt.txt")
+normi_scanpy_log2fc <- read.delim("......./IRIS/3_Tcells/visualization/Tcells_CD8/CD8_GeneOntology/scanpy_to_R/DEGs_CD8_Naive_normi_fromSCANPY.logFC_filt.txt")
+gene_universe_all <- read.delim("......./IRIS/3_Tcells/visualization/Tcells_CD8/CD8_GeneOntology/scanpy_to_R/gene_CD8_human_donors.txt")$X0
+gene_universe_forDEGs <- read.delim("......./IRIS/3_Tcells/visualization/Tcells_CD8/CD8_GeneOntology/scanpy_to_R/DEGs_CD8_Naive_padj_sig.txt")$names
 
 #####
 #Parameters
