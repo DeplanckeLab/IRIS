@@ -1,7 +1,4 @@
 #!/bin/bash
-
-# Author: Caro
-# Date: Summer 2021
 # Description: This script extracts quality control data from fastq files of IRIS experiments   
 
 # Path to conda environments
@@ -26,13 +23,6 @@ Load config file.
 
 EOF
 }
-
-
-# $@ : all command line parameters are passed to the script
-# -o : for short options (like -c)
-# -l : for long options with double dash (like --config-file); comma separates different long options
-# -a : for long options with single dash (like -config-file)
-# :  : mandatory variable (:: optional)
 
 options=$(getopt -l "help,config-file:" -o "hc:" -a -- "$@")
 
@@ -79,13 +69,14 @@ expID=$experimentID
 fastq_dir=$fastq_directory
 scripts_path=$scripts_path
 cellcodes_wl=$cellcodes_whitelist
+cellcodes_brCC=$cellcodes_BARCODEtoCC
 SIS=$sample_info_sheet
 genome=$genome
 index_version=$STAR_index_version
 
 # Check if any variable was not defined in the config file 
 # Array of variables coming from config file that must be assigned 
-config_variables=(userID seqRunID experimentID fastq_directory scripts_path cellcodes_whitelist  
+config_variables=(userID seqRunID experimentID fastq_directory scripts_path cellcodes_whitelist cellcodes_brCC
 sample_info_sheet genome STAR_index_version)
 
 # Print name of variables if not defined in config file and exit 
@@ -97,7 +88,7 @@ done
 
 # Check if directories and files defined in the config file exist
 directories=($fastq_directory $scripts_path)
-files=($cellcodes_whitelist $sample_info_sheet )
+files=($cellcodes_whitelist $cellcodes_BARCODEtoCC $sample_info_sheet )
 
 # Check if files exist and exit of not 
 for file in "${files[@]}"; do
@@ -203,8 +194,6 @@ done
 fi
 
 ## set directory of genome
-
-# Once there was a human genome ... but than J rn deleted it ... playing god can be so easy :D 
 # Mouse genome
 if [[ "$genome" == "mouse" ]]
 then
@@ -255,7 +244,7 @@ then
 	inputGTF=$genomedir/gtf/CriGri_Drosor6.37FB202006.gtf;
 fi
 
-
+# Loop through fastq folders (= wells)
 for fastq in "$fastq_dir"/*.fastq.gz; 
 do 
 	# Create folder per well in "/count_matrices" folder and copy perspective fastq files 
@@ -276,24 +265,6 @@ do
 
 
 	## Run STARsolo to map and demultiplex 
-
-	# See https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf for explanation of parameters 
-	# --outFileNamePrefix : Output directory 
-	# --readFilesCommand  : zcat - to uncompress .gz files (execute for every file)
-	# --readFilesIn : For paired-end reads use comma separated list for read1 followed by space followed by comma separated list for read2 (!!! 1st file has to be cDNA read, and the 2nd file has to be the barcode (cell+UMI) read !!!)
-	# --soloType : type of single-cell RNA-seq (CB_UMI_Simple: one UMI and one Cell Barcode of fixed length in read1; CB_samTagOut: output cell barcode as CR and/or CB SAM tag, requires -outSAMtype BAM Unsorted and/or SortedByCoordiante)  
-	# --soloCBstart : cell barcode start base
-	# --soloCBlen : cell barcode length
-	# --soloUMIstart : UMI start base 
-	# --soloUMIlen : UMI length
-	# --soloCBmatchWLtype : matching the Cell Barcodes to the WhiteList (1MM: only one match in whitelist with 1 mismatched base allowed)
-	# --soloCBwhitelist : file(s) with whitelist(s) of cell barcodes
-	# --soloUMIdedup : type of UMI deduplication (collapsing) algorithm (1MM_All: all UMIs with 1 mismatch distance to each other are collapsed (i.e.counted once))
-	# --outSAMtype : output of SAM/BAM file (first word: BAM, SAM or NONE; second word: Unsorted (needed for soloType), SortedByCoordinate)
-	# --outSAMattributes :  a string of desired SAM/BAM attributes
-	# --outSAMunmapped : output of unmapped reads in the SAM format
-	# --limitBAMsortRAM : >=0 maximum available RAM (bytes) for sorting BAM; must be > 0 when --genomeLoad is LoadAndKeep
-
 	STAR --genomeDir $STARIndexdir \
 		--genomeLoad LoadAndKeep \
 		--runThreadN 18 \
@@ -340,15 +311,10 @@ STAR --genomeDir $STARIndexdir --genomeLoad Remove
 ## Delete all files and directories not needed 
 for well in $rcm_dir/*; do
 	rm $well/*.fastq.gz
-	#rm $well/*.bam
 done
 
 # Delete temporary folder 
 rm -r $temp_dir
-
-# Delete genome files 
-#rm -r $STARIndexdir
-#rm $inputGTF
 
 # Deactivate conda environment for mapping 
 conda deactivate 
@@ -357,7 +323,7 @@ conda deactivate
 conda activate r_v4
 
 # Run R script for plotting statistics
-Rscript $scripts_path/IRIS_scRNA_QC_RCMtoDEG.R $exp_dir $expID $cellcodes_wl $SIS
+Rscript $scripts_path/IRIS_scRNA_QC_RCMtoDEG.R $exp_dir $expID $cellcodes_wl $cellcodes_brCC $SIS
 #arg1 exp_dir
 #arg2 exp_ID
 #arg3 cellcodes_wl

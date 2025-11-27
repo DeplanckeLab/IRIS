@@ -33,16 +33,19 @@ args <- commandArgs(T)
 
 # Assign args 
 work_dir <- args[1]
-#work_dir <- "/home/pezoldt/NAS2/iris/experiments/ngrennin_JP280_aris03_human_mouse_droso"
+#work_dir <- "/home/pezoldt/NAS2/iris/experiments/pezoldt_NG045_iris42"
 
 expID <- args[2]
-#expID <- "JP280"
+#expID <- "NG045"
 
-barcodes_wl <- args[4]
-#barcodes_wl <- "/home/pezoldt/NAS2/iris/4_genomes/barcodes/iris_genomics/20210618_scRNAseq_cellcode_whitelist_CC_7bp.txt"
+barcodes_wl <- args[3]
+#barcodes_wl <- "/home/pezoldt/NAS2/iris/1_scripts/manuscripts/IRIS/X_docs/2_barcodes/scRNAseq_cellcode_whitelist_CC_7bp.txt"
 
-sample_info_sheet <- args[6]
-#sample_info_sheet <- "/home/pezoldt/NAS2/iris/0_seq_run_processing/c_SIS/sis_aris03_mapping_QC_pipeline_v2.csv"
+barcodes_file <- args[4]
+#barcodes_file <- "/home/pezoldt/NAS2/iris/1_scripts/manuscripts/IRIS/X_docs/2_barcodes/scRNAseq_cellcode_BARCODEtoCC_7bp.txt"
+
+sample_info_sheet <- args[5]
+#sample_info_sheet <- "/home/pezoldt/NAS2/iris/1_scripts/manuscripts/IRIS/0_scRNAseq_preprocessing/sample_info_sheets/IRIS/sis_iris42_smallNG045_mapping_QC_pipeline_v2.csv"
 
 # Print status of script 
 cat("Read arguments from command line:\n")
@@ -57,6 +60,7 @@ analysis <- "analysis"
 rcm <- "count_matrices"
 plots <- "plots"
 objects <- "objects"
+ERCC <- "no"
 
 # Set file paths 
 rcm_path <- file.path(work_dir, data, rcm)
@@ -522,32 +526,92 @@ cat("Compiled UMI count matrix\n")
 ## Extract overall UMI stats per cells
 #####
 # Extract UMI stats under regard of CC number per well
+# Extract UMI stats under regard of CC number per well
 UMI_stats <- lapply(seq_along(UMI_SYMB_list), function(x){
   # Loop through list 
   UMI_table <-  UMI_SYMB_list[[x]]
   
   # Check if table only has only one column = one CC per weill
   if(ncol(UMI_table) == 1){
-
+    
+    # Get number of ERCC per cell 
+    n_UMI_ERCC <- as.vector(sum(UMI_table[grepl("ERCC-00", rownames(UMI_table)),]))
+    
+    # Get number of mitochondrial UMI per cell 
+    #n_UMI_mito <- as.vector(sum(UMI_table[grepl("^MT-", rownames(UMI_table)),]))
+    
     # Get number of UMI per cell (= sum all counts per cell)
     n_UMI <- as.vector(sum(UMI_table))
     
     # Get number of detected genes per cell (i.e. amount of genes with a count > 0)
     n_genes <- apply(UMI_table, 2, function(x){sum(x > 0)})
-  
+    
+    # Get number of detected mitochondrial genes per cell 
+    #n_genes_mito <- as.data.frame(UMI_table[which(grepl("MT-", rownames(UMI_table))), ])
+    #n_genes_mito <- apply(n_genes_mito, 2, function(x){sum(x > 0)})
+    
+    # Percentage of mito UMI 
+    #UMI_mito_percent <- n_UMI_mito/n_UMI
+    
+    #Percentage of mito genes 
+    #mito_percentage <- n_genes_mito/n_genes
     
     # more than one CC per well  
   }else{
-   
+    
+    # Get number of ERCC per cell 
+    n_UMI_ERCC <- colSums(UMI_table[grepl("ERCC-00", rownames(UMI_table)),])
+    
+    # Get number of mitochondrial UMI per cell 
+    #n_UMI_mito <- colSums(UMI_table[grepl("^MT-", rownames(UMI_table)),])
+    
     # Get number of UMI per cell (= sum all counts per cell)
     n_UMI <- colSums(UMI_table)
     
     # Get number of detected genes per cell (i.e. amount of genes with a count > 0)
     n_genes <- apply(UMI_table, 2, function(x){sum(x > 0)})
-
+    
+    # Get number of detected mitochondrial genes per cell 
+    #n_genes_mito <- UMI_table[which(grepl("^MT-", rownames(UMI_table))), ]
+    #n_genes_mito <- apply(n_genes_mito, 2, function(x){sum(x > 0)})
+    
+    # Percentage of mito UMI 
+    #UMI_mito_percent <- n_UMI_mito/n_UMI
+    
+    #Percentage of mito genes 
+    #mito_percentage <- n_genes_mito/n_genes
     
   }
-
+  
+  # Create dataframe of stats 
+  if(ERCC  == "yes"){
+    
+    temp_umi <- data.frame(n_UMI = n_UMI,
+                           n_UMI_ERCC = n_UMI_ERCC,
+                           #n_UMI_mito = n_UMI_mito,
+                           n_genes = n_genes,
+                           #n_genes_mito = n_genes_mito,
+                           #percent_UMI_mito = UMI_mito_percent,
+                           #percent_genes_mito = mito_percentage,
+                           Full_Cell_ID = paste0(names(n_genes)))
+    
+    return(temp_umi)
+    
+  }else{
+    
+    temp_umi <- data.frame(n_UMI = n_UMI,
+                           #n_UMI_mito = n_UMI_mito,
+                           n_genes = n_genes,
+                           #n_genes_mito = n_genes_mito,
+                           #percent_UMI_mito = UMI_mito_percent,
+                           #percent_genes_mito = mito_percentage,
+                           Full_Cell_ID = paste0(names(n_genes)))
+    
+    return(temp_umi)
+    
+  }
+  
+})
 # Create one data frame of all UMI stats per cell
 UMI_stats <- do.call(rbind, UMI_stats)
 rownames(UMI_stats) <- NULL
@@ -556,6 +620,7 @@ rownames(UMI_stats) <- NULL
 ## Extract overall UMI stats of all detected CellCodes
 #####
 # Extract UMI stats under regard of CC number per well
+# Extract UMI stats under regard of CC number per well
 UMI_stats_detected_CellCodes <- lapply(seq_along(UMI_allDetected_CCs_SYMB_list), function(x){
   # Loop through list 
   UMI_table <-  UMI_allDetected_CCs_SYMB_list[[x]]
@@ -563,14 +628,36 @@ UMI_stats_detected_CellCodes <- lapply(seq_along(UMI_allDetected_CCs_SYMB_list),
   # Check if table only has only one column = one CC per weill
   if(ncol(UMI_table) == 1){
     
+    # Get number of ERCC per cell 
+    n_UMI_ERCC <- as.vector(sum(UMI_table[grepl("ERCC-00", rownames(UMI_table)),]))
+    
+    # Get number of mitochondrial UMI per cell 
+    #n_UMI_mito <- as.vector(sum(UMI_table[grepl("^MT-", rownames(UMI_table)),]))
+    
     # Get number of UMI per cell (= sum all counts per cell)
     n_UMI <- as.vector(sum(UMI_table))
     
     # Get number of detected genes per cell (i.e. amount of genes with a count > 0)
     n_genes <- apply(UMI_table, 2, function(x){sum(x > 0)})
-        
+    
+    # Get number of detected mitochondrial genes per cell 
+    #n_genes_mito <- as.data.frame(UMI_table[which(grepl("MT-", rownames(UMI_table))), ])
+    #n_genes_mito <- apply(n_genes_mito, 2, function(x){sum(x > 0)})
+    
+    # Percentage of mito UMI 
+    #UMI_mito_percent <- n_UMI_mito/n_UMI
+    
+    #Percentage of mito genes 
+    #mito_percentage <- n_genes_mito/n_genes
+    
     # more than one CC per well  
   }else{
+    
+    # Get number of ERCC per cell 
+    n_UMI_ERCC <- colSums(UMI_table[grepl("ERCC-00", rownames(UMI_table)),])
+    
+    # Get number of mitochondrial UMI per cell 
+    #n_UMI_mito <- colSums(UMI_table[grepl("^MT-", rownames(UMI_table)),])
     
     # Get number of UMI per cell (= sum all counts per cell)
     n_UMI <- colSums(UMI_table)
@@ -578,7 +665,47 @@ UMI_stats_detected_CellCodes <- lapply(seq_along(UMI_allDetected_CCs_SYMB_list),
     # Get number of detected genes per cell (i.e. amount of genes with a count > 0)
     n_genes <- apply(UMI_table, 2, function(x){sum(x > 0)})
     
+    # Get number of detected mitochondrial genes per cell 
+    #n_genes_mito <- UMI_table[which(grepl("^MT-", rownames(UMI_table))), ]
+    #n_genes_mito <- apply(n_genes_mito, 2, function(x){sum(x > 0)})
+    
+    # Percentage of mito UMI 
+    #UMI_mito_percent <- n_UMI_mito/n_UMI
+    
+    #Percentage of mito genes 
+    #mito_percentage <- n_genes_mito/n_genes
+    
   }
+  
+  # Create dataframe of stats 
+  if(ERCC  == "yes"){
+    
+    temp_umi <- data.frame(n_UMI = n_UMI,
+                           n_UMI_ERCC = n_UMI_ERCC,
+                           #n_UMI_mito = n_UMI_mito,
+                           n_genes = n_genes,
+                           #n_genes_mito = n_genes_mito,
+                           #percent_UMI_mito = UMI_mito_percent,
+                           #percent_genes_mito = mito_percentage,
+                           Full_Cell_ID = paste0(names(n_genes)))
+    
+    return(temp_umi)
+    
+  }else{
+    
+    temp_umi <- data.frame(n_UMI = n_UMI,
+                           #n_UMI_mito = n_UMI_mito,
+                           n_genes = n_genes,
+                           #n_genes_mito = n_genes_mito,
+                           #percent_UMI_mito = UMI_mito_percent,
+                           #percent_genes_mito = mito_percentage,
+                           Full_Cell_ID = paste0(names(n_genes)))
+    
+    return(temp_umi)
+    
+  }
+  
+})
 
 # Create one data frame of all UMI stats per cell
 UMI_stats_detected_CellCodes <- do.call(rbind, UMI_stats_detected_CellCodes)

@@ -13,6 +13,9 @@ fastq_directory="/data/0_sequencing/sequencing_runs/NG045"
 # Set location of barcode whitelist used in experiment 
 cellcodes_whitelist="/home/pezoldt/sequencing/1_scripts/manuscripts/IRIS/X_docs/2_barcodes/scRNAseq_cellcode_whitelist_CC_7bp.txt"
 
+# Set location of barcodes needed for brb toolbox
+cellcodes_BARCODEtoCC="/home/pezoldt/sequencing/1_scripts/manuscripts/IRIS/X_docs/2_barcodes/scRNAseq_cellcode_BARCODEtoCC_7bp.txt"
+
 # Set location of pipeline R scripts
 scripts_path="/home/pezoldt/sequencing/1_scripts/manuscripts/IRIS/0_scRNAseq_preprocessing/IRIS_scRNA_QC_Rscripts"
 
