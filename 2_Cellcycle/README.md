@@ -6,6 +6,11 @@ This folder contains the scripts that are necessary to recreate the results show
 2. Deep-learning pipeline for cell shape, nuclear, and angular model (Figure 5): `2_DeepLearnging_pipeline`
 3. Analysis of deep-learning results (Figure5): `3_DeepLearnging_analysis`
 
+All additional necessary files are deposited in the following folders:
+- input_files: Pregenerated files to run scripts.
+- output_files: Comprehensive output list of scRNA-seq analysis.
+- utils: Utility files/modules.
+
 ## Execution extructions
 ### Execution order
 The scripts are partially dependent on eachother. We provide all temporary results necessary that make the scripts executable individually. The only file necessary for this is X.h5. For regeneration of all files we suggest the following order of execution:
