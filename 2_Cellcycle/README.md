@@ -2,9 +2,9 @@
 ## Introduction
 This folder contains the scripts that are necessary to recreate the results shown in Figure 4 and 5. The scripts are separated into 3 discrete scripts:
 
-1.`1_scRNA-seq_analysis`: FUCCI scRNA-seq analysis (Figure 4)
-2.`2_DeepLearnging_pipeline`Deep-learning pipeline for cell shape, nuclear, and angular model (Figure 5).
-3.`3_DeepLearnging_analysis`Analysis of deep-learning results (Figure5).
+1. `1_scRNA-seq_analysis`: FUCCI scRNA-seq analysis (Figure 4)
+2. `2_DeepLearnging_pipeline`Deep-learning pipeline for cell shape, nuclear, and angular model (Figure 5).
+3. `3_DeepLearnging_analysis`Analysis of deep-learning results (Figure5).
 
 All additional necessary files are deposited in the following folders:
 - input_files: Pregenerated files to run scripts.
