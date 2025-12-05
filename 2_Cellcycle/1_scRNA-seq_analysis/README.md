@@ -1,3 +1,9 @@
+# scRNA-seq analyis
+-> Describe what this is about
+-> Describe which input files necessary
+
+
+
 ### Environment
 Assumes a running jupyter-hub install and conda on the machine. Replace '<ENV_NAME> with environment name of choice.
 ~~~
