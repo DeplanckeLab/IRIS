@@ -10,7 +10,7 @@ This folder containes all scripts to train the cell shape CNN, nucleus CNN, and 
 - MLP models: `image2transcriptome_feature.py`
 2. Results are then compiled in the following notebook: `compile_scores.ipynb`
 
-The compiled data is analyzed/plotted in the 'DeepLearning_analysis' section. All used script calls are listed below in 'Example calls'
+The compiled data is analyzed/plotted in the 'DeepLearning_analysis' section. The specific calls of all scripts are listed below in 'Example calls'
 
 ### Installation
 
