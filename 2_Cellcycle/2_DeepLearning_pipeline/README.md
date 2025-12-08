@@ -4,10 +4,10 @@
 This folder containes all scripts to train the cell shape CNN, nucleus CNN, and fucci angle MLP. Scripts are run in the following order:
 
 1. Training of models (see Traning the model):
-  - CNN models: `image2transcriptome.py`
-    - On Hoechst '405' for the nucleus shape model.
-    - On the segmentation mask 'seg' for the cell shape model. 
-  - MLP models: `image2transcriptome_feature.py`
+    - CNN models: `image2transcriptome.py`
+        - On Hoechst '405' for the nucleus shape model.
+        - On the segmentation mask 'seg' for the cell shape model.
+    - MLP models: `image2transcriptome_feature.py`
 2. Results are then compiled in the following notebook: `compile_scores.ipynb`
 
 The compiled data is analyzed/plotted in the 'DeepLearning_analysis' section. The specific calls of all scripts are listed below in 'Example calls'
