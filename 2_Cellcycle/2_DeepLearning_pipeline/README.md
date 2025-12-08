@@ -48,10 +48,9 @@ Description of the main arguments:
 * `dataset`: Name of the compiled H5 file.
 * `cell_types`: List of cell types to select. By default, all cell types will be included.
 * `species`: List of species to select. By default, all species will be included.
-* `channel`: Name of the channel in the H5 file that will be used to make predictions, e.g.: `405`, `bf`, `seg`.
+* `channel`: Name of the channel in the H5 file that will be used to make predictions, e.g.: `405`, `seg`.
 * `apply_segmentation_mask`: Whether to apply the segmentation mask to the images.
-* `model_name`: Name of the model to train (`resnet` by default). Currently supported options: `resnet`, `MAE`.
-* `checkpoint_file`: Path of the pretrained MAE checkpoint, if `model_name` is `MAE`.
+* `model_name`: Name of the model to train (`resnet` by default). Currently supported options: `resnet`.
 * `save_model`: Whether to save the trained models.
 * `discard_spikein`: Whether to discard spikein cells based on the average expression of a few pre-specified genes.
 * `device`: GPU number.
