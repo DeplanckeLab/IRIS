@@ -64,21 +64,17 @@ The script `loo_image2transcriptome_feature.py` similarly trains baseline models
 ---
 
 ### Example calls
-Replace:
-- Dataset location: <DATASET_PATH>
-- Dataset name: <DATASET_NAME>
-
 Nucleus CNN model:
 ~~~
-python image2transcriptome.py --data_dir <DATASET_PATH> --out_dir ./results --dataset <DATASET_NAME> --channel '405' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+python image2transcriptome.py --data_dir ../input_files --out_dir ./results --dataset fucci_final --channel '405' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
 ~~~
 Cell shape CNN model:
 ~~~
-python image2transcriptome.py --data_dir <DATASET_PATH> --out_dir ./results --dataset <DATASET_NAME> --channel 'seg' --train_augmentations 'random_rotation' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+python image2transcriptome.py --data_dir ../input_files --out_dir ./results --dataset fucci_final --channel 'seg' --train_augmentations 'random_rotation' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
 ~~~
 Angular MLP model
 ~~~
-python image2transcriptome_feature.py --data_dir <DATASET_PATH> --out_dir ./results --dataset <DATASET_NAME> --channels 488 561 seg --fit_method mlp --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+python image2transcriptome_feature.py --data_dir ../input_files --out_dir ./results --dataset fucci_final --channels 488 561 seg --fit_method mlp --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
 ~~~
 ---
 
