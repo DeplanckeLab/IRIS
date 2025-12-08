@@ -29,10 +29,10 @@ The `image2transcriptome.py` script supports 2 split types:
 
 ```
 python image2transcriptome.py
-       --data_dir DATA_DIR_PATH
-       --out_dir OUT_DIR_PATH
-       --dataset 'fucci_3t3_221124'
-       --channel 'bf'
+       --data_dir <DATA_DIR_PATH>
+       --out_dir <OUT_DIR_PATH>
+       --dataset <DATASET_NAME>
+       --channel <CHANNEL_NAME>
        --apply_segmentation_mask
        --model_name 'resnet'
        --save_model
