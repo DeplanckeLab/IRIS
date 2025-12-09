@@ -25,7 +25,7 @@ Precomputed files are available in the `.\input_files` folder so all scripts sho
 ## Execution extructions
 > :warning: In order to run the scripts the `fucci_final.h5` needs to be deposited in `.\input_files` as described above!
 ### Execution order
-The scripts are partially dependent on eachother. We provide all temporary results necessary that make the scripts executable individually. The only file necessary for this is X.h5. For regeneration of all files we suggest the following order of execution:
+The scripts are partially dependent on eachother. We provide all temporary results necessary that make the scripts executable individually. The only file necessary for this is `fucci_final.h5` For regeneration of all files we suggest the following order of execution:
 
 1. FUCCI_scRNA-seq can be fully executed except for the last cell. Produces the following files:
 2. Execution of the machine learning pipeline.
