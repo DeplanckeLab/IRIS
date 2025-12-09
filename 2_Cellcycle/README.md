@@ -14,9 +14,11 @@ All additional necessary files are deposited in the following folders:
 ## Input data
 ### .h5 dataset of preprocessed imaging and expression data
 The imaging and count matrices are available as an hdf5 dataset. This dataset was generated from the raw sequencing data as described in the Methods section, and from the raw imaging data that was preprocessed as shown in Supplementary Figure 3. The hdf5 dataset contains each cell as group with a predefined cell id (cid). For each cell the following data is available: 
+
 - preprocces imaging data (center cropped) of the in focus plane and +/- 1 plane are available
 - the segmentatiom mask
 - the gene expression data.
+
 The preprocessed data is deposited on Zenodo under the link: [fucci_final.h5](https://zenodo.org/records/17864950?preview=1&token=eyJhbGciOiJIUzUxMiIsImlhdCI6MTc2NTI4MjM1NiwiZXhwIjoxNzk4Njc1MTk5fQ.eyJpZCI6IjRkNDU0MjMyLTgzYTUtNDFhZS04OGQ0LTBhY2ZjZjcxZjQ5NyIsImRhdGEiOnt9LCJyYW5kb20iOiI5MTFiOTUyMWQ0YTliMGRkZWNkZTQwMTk5NDA4NjRiYyJ9.KeNdIvWJE2Nnd6SCAcCYRsYgMW51cRx8G8j5_K7GxfpPJ3WJHVgnyaJrILvHe7bRYv8thKsp2MWDsoLN8JxWtA) and needs to be deposited in the `.\input_files`.
 
 ### Additional data
