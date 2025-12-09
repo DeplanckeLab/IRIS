@@ -13,7 +13,7 @@ All additional necessary files are deposited in the following folders:
 
 ## Input data
 ### .h5 dataset of preprocessed imaging and expression data
-The imaging and count matrices are available as an hdf5 dataset. The dataset contains each cell as group. For each cell the following data is available: 
+The imaging and count matrices are available as an hdf5 dataset. This dataset was generated from the raw sequencing data as described in the Methods section, and from the raw imaging data that was preprocessed as shown in Supplementary Figure 3. The hdf5 dataset contains each cell as group with a predefined cell id (cid). For each cell the following data is available: 
 - preprocces imaging data (center cropped) of the in focus plane and +/- 1 plane are available
 - the segmentatiom mask
 - the gene expression data.
