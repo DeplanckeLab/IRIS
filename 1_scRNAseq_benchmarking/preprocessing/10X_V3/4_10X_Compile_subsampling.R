@@ -11,11 +11,9 @@ library(plyr)
 #Paths & Globals
 #####
 expID <- "JP131"
-PATH_all <- "/home/pezoldt/updepla/projects/iris/4_sequencing_analysis/JP131/results"
-PATH_10X <- "/home/pezoldt/updepla/projects/iris/4_sequencing_analysis/JP131/results/human/Solo.out/Gene/filtered"
-PATH_subsampling <- "/home/pezoldt/updepla/projects/iris/4_sequencing_analysis/JP131/results/human/subsampling_100000/merged"
-
-PATH_output_tables <- "/home/pezoldt/updepla/projects/iris/4_sequencing_analysis/JP131/results/tables"
+PATH_10X <- "OUTPUTPATH/SCRIPT:1_10X_Starsolo_LT_v3.sh:::/"
+PATH_subsampling <- "OUTPUTPATH/SCRIPT:2_10X_SubsampleBAM.sh:::/"
+PATH_output_tables <- "/YOURPATH"
 
 #Depth
 subsampling_depth <- c(5000,10000,15000,20000,50000,100000,100000)
@@ -29,11 +27,11 @@ options(scipen = n)
 #####
 #From all_reads data
 ## All reads
-t_allReads <- read.table(paste0("/home/pezoldt/updepla/projects/iris/4_sequencing_analysis/JP131/results/tables/JP131_reads_per_barcode.txt"),
+t_allReads <- read.table(paste0("YOURPATH/JP131_reads_per_barcode.txt"),
                          header = FALSE, skip = 1)
 colnames(t_allReads) <- c("n_all_reads", "Cell_ID")
 ## Mapped Reads
-t_mappedReads <- read.table(paste0("/home/pezoldt/updepla/projects/iris/4_sequencing_analysis/JP131/results/tables/JP131_mappedreads_per_barcode.txt"),
+t_mappedReads <- read.table(paste0("YOURPATH/JP131_mappedreads_per_barcode.txt"),
                            header = FALSE, skip = 1)
 colnames(t_mappedReads) <- c("n_mapped_reads", "Cell_ID")
 ## Count matrix

@@ -17,17 +17,17 @@ library(rtracklayer)
 expID_IRIS <- c("JP266")
 expID_10X <- c("JP131")
 expID_Dropseq <- c("JP238")
-genome_10X <- c("hg")
-species_in_Exp <- c("human")
-genome_IRIS <- c("human")
 
+#Output count matrix of: /.../IRIS/1_scRNAseq_benchmarking/preprocessing/10X_V3
 PATH_input_10X_LT <- "/home/pezoldt/updepla/projects/iris/4_sequencing_analysis/JP131/results/tables"
-PATH_input_IRIS <- "/home/pezoldt/updepla/projects/iris/4_sequencing_analysis"
+#GEO linK to count matrix: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9072147
+PATH_input_IRIS <- "/YOURPATH/GSM9072147_JP266_human_UMI_all_cells_ENSG.txt"
+#Output count matrix of: /.../IRIS/1_scRNAseq_benchmarking/preprocessing/DisCo
 PATH_input_Dropseq <- "/home/pezoldt/updepla/projects/iris/4_sequencing_analysis/JP238/results/tables"
 
-PATH_output <- "/home/pezoldt/updepla/projects/0_Experiments/226_10X_comparison/results"
-PATH_human_genes <- "/home/pezoldt/updepla/projects/iris/2_annotation_genomes/genomes/human/GRCh38.90/gtf/genesymbol_ensg_GRCh38.90.txt"
-  
+#Output
+PATH_output <- paste0("/YOURPATH")
+
 #Globals
 min_UMI <- 3000
 min_mapped_reads <- 100000

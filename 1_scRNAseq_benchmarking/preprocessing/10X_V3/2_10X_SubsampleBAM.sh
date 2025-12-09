@@ -9,12 +9,11 @@ source /opt/miniconda3/miniconda3/etc/profile.d/conda.sh
 conda activate sc_rna_seq_v2
 
 #Dir & Paths
-dir_STARIndex="/data/genomes/human/GRCh38.90_GFP_mCherry_ERCC/STAR_index_2_7_9a"
-dir_bam="/data/4_sequencing_analysis/JP131/results/human"
+dir_STARIndex="YOURPATH/STAR_index_2_7_9a"
+dir_bam="/OUTPUTPATH/SCRIPT:1_10X_Starsolo_LT_v3.sh:::"
 dir_subsampling=$dir_bam"/subsampling_100000"
 dir_subsampling_bam=$dir_subsampling"/bam"
 dir_subsampling_merged=$dir_subsampling"/merged"
-#path_barcodes="/data/4_sequencing_analysis/JP142/results/hg/Solo.out/GeneFull/filtered/barcodes.tsv.gz"
 name_bam="Aligned.sortedByCoord.out.bam"
 
 #set subsample sizes
@@ -24,41 +23,11 @@ subsample_sizes=(100000 50000 20000 15000 10000 5000)
 mkdir $dir_subsampling
 mkdir $dir_subsampling_bam
 mkdir $dir_subsampling_merged
-#chmod 755 -R $dir_subsampling_bam
-
-#Make test bam
-#samtools view -b -o $dir_bam/$name_bam -s 0.05 $dir_bam"/Aligned.sortedByCoord.out.bam"
-
-#Load files
-## Barcode files
-## Note: need a spacer line as header and at the end
-#zcat $path_barcodes > $dir_subsampling"/barcodes.txt"
-
-
 
 # Kick out unmapped reads 
-#samtools view -@ 3 -b -F 4 $dir_bam/$name_bam > $dir_bam"/mapped.bam"
 # Save the header lines
 samtools view -H $dir_bam"/mapped.bam" > $dir_subsampling"/BAM_header"
 
-#Test
-#Barcode="TTTAGTCTCTGGGATT"
-#samtools view -@ 3 $dir_bam"/mapped.bam" | grep -F $Barcode > $dir_subsampling_bam/"$Barcode"_subsample.bam
-#cat $dir_subsampling"/BAM_header" $dir_subsampling_bam/"$Barcode"_subsample.bam > $dir_subsampling_bam/"$Barcode"_subsample.sam
-#samtools view -b $dir_subsampling_bam/"$Barcode"_subsample.sam > $dir_subsampling_bam/"$Barcode"_subsample.bam
-
-#i=200000
-#total=$(samtools view -c $dir_subsampling_bam"/"$Barcode"_subsample.bam")
-#echo $total
-#frac=$(awk -v var1=$i -v var2=$total 'BEGIN { print  ( var1 / var2 ) }')
-#echo $frac
-
-#if [[ $frac > 1 ]]; then
-#cp $dir_subsampling_bam"/"$Barcode"_subsample.bam" $dir_subsampling_bam"/"$Barcode"_subsample_"$i".bam"
-#else
-#samtools view -b -s $frac $dir_subsampling_bam"/"$Barcode"_subsample.bam" -o $dir_subsampling_bam"/"$Barcode"_subsample_"$i".bam"
-#samtools view -F 0x04 -c $dir_subsampling_bam"/"$Barcode"_subsample_"$i".bam"
-#fi
 
 ### Solution Caro
 # Read barcodes from file 

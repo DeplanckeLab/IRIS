@@ -10,8 +10,9 @@ conda activate sc_rna_seq_v2
 
 # Define directory paths 
 #Adapt
-PATH_output="/data/1_users/pezoldt/experiments/JP146"
-PATH_fastq="/data/1_users/pezoldt/experiments/JP146/fastq"
+PATH_output="/YOURPATH"
+#GEO link: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE148091
+PATH_fastq="/YOURPATH/fastq"
 PATH_starindexdir="/data/genome/homo_sapiens/GRCh38.104/STAR_Index"
 read2_1=$PATH_fastq/"HEK_10X_S6_R2_001.fastq.gz"
 read1_1=$PATH_fastq/"HEK_10X_S6_R1_001.fastq.gz"
@@ -20,7 +21,7 @@ read1_1=$PATH_fastq/"HEK_10X_S6_R1_001.fastq.gz"
 
 
 #Permanent
-cellcodes_wl="/home/pezoldt/sequencing/4_genomes/barcodes/10X_genomics/low_throughput_9K-green19-LT-dev.txt"
+cellcodes_wl="YOURPATH/10X_genomics/low_throughput_9K-green19-LT-dev.txt"
 
 	## Run STARsolo to map and demultiplex 
 

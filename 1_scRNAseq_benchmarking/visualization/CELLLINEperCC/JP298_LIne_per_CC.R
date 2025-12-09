@@ -31,9 +31,12 @@ userID <- "pezoldt"
 simple_ID <- "JP298"
 
 #Output name of scRNA-seq pipeline
-#Automatic paths
-PATH_input <- paste0("/home/",userID,"/updepla/projects/iris/4_sequencing_analysis/",expID,"/pipeline_output/",mapped_genome)
-PATH_output <- paste0("/home/",userID,"/updepla/projects/iris/4_sequencing_analysis/",expID,"/results")
+#Note: Get count matrix and QC files from GEO and unzip
+#Link: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9072150
+PATH_countmatrix <- "/YOURPATH/GSM9072150_JP298_UMI_human_mouse_all_cells_ENSG.txt"
+PATH_pivot <- "/YOURPATH/GSM9072150_JP298_human_mouse_QC.txt"
+#Output
+PATH_output <- paste0("/YOURPATH")
 PATH_output_figures <- paste0(PATH_output,"/plots")
 PATH_output_objects <- paste0(PATH_output,"/objects_transcriptome")
 PATH_output_tables <- paste0(PATH_output,"/tables")
@@ -41,9 +44,11 @@ PATH_output_tables <- paste0(PATH_output,"/tables")
 #####
 #Load sequencing data
 #####
-load(paste0(PATH_input,"/analysis/objects/objects_plotting.RData"), envir = parent.frame(), verbose = FALSE)
+UMI_all_cells_ENSG <- read.delim(PATH_countmatrix)
+pivot_table <- read.delim(PATH_pivot)
+#Quick QC
 ucm_lid <- UMI_all_cells_ENSG
-colnames(ucm_lid) <- colnames(UMI_all_cells_SYMB)
+colnames(ucm_lid) <- colnames(UMI_all_cells_ENSG)
 sum(as.numeric(colSums(ucm_lid) > min_UMI))
 ucm_lid <- ucm_lid[,colSums(ucm_lid) > min_UMI]
 ncol(ucm_lid)

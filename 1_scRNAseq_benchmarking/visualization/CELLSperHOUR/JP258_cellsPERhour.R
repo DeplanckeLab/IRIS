@@ -6,8 +6,8 @@
 ##############
 
 #load custom functions around scRNA-seq with IRIS, imaging and tools used for analysis
-source("/home/pezoldt/NAS2/iris/1_scripts/iris_scRNAseq/2_functions/scRNA-seq/seuratV5.R")
-source("/home/pezoldt/NAS2/iris/1_scripts/iris_scRNAseq/2_functions/scRNA-seq/support_transcriptome_integration.R")
+source(".../IRIS/X_docs/1_functions/seuratV5.R")
+source(".../IRIS/X_docs/1_functions/support_transcriptome_integration.R")
 
 #libraries
 library(dplyr)
@@ -25,15 +25,18 @@ userID <- "pezoldt"
 sample_ids_IRIS <- c("JP258")
 sample_ids <- c(sample_ids_IRIS)
 #Define paths sequencing data
-PATH_input <- paste0("/home/",userID,"/updepla/projects/iris/")
-PATH_input_IRIS_sequencing <- paste0(PATH_input,"/4_sequencing_analysis/",sample_ids_IRIS)
-PATH_output <- paste0("/home/",userID,"/updepla/projects/iris/4_sequencing_analysis/",sample_ids_IRIS,"/results")
+#Note: Get count matrix and QC files from GEO and unzip
+#Link: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE300917
+PATH_countmatrix <- "/YOURPATH/GSE300917_JP258_human_UMI_all_cells_ENSG.txt"
+PATH_pivot <- "/YOURPATH/GSE300917_JP258_human_QC.txt"
+#Output
+PATH_output <- paste0("/YOURPATH")
 PATH_output_figures <- paste0(PATH_output,"/plots")
 PATH_output_objects <- paste0(PATH_output,"/objects")
 PATH_output_tables <- paste0(PATH_output,"/tables")
 
 #Path signatures
-PATH_signature <- "/home/pezoldt/NAS2/iris/1_scripts/iris_scRNAseq/3_signatures_genes"
+PATH_signature <- ".../IRIS/X_docs/3_signatures_genes"
 
 #####
 #Parameters Seurat
@@ -88,8 +91,9 @@ for(i in 1:length(sample_ids_IRIS)){
   print(sample_ids_IRIS[i])
   
   #Load files
-  load(paste0(PATH_input_IRIS_sequencing,"/pipeline_output/",species,"/analysis/objects/objects_plotting.RData"), envir = parent.frame(), verbose = FALSE)
-
+  UMI_all_cells_SYMB <- read.delim(PATH_countmatrix)
+  pivot_table <- read.delim(PATH_pivot)
+  
   ## Image annotation
   #Select cells with min_UMI
   pivot_table_i <- subset(pivot_table, n_UMI > min_nUMI)

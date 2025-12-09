@@ -10,9 +10,10 @@ conda activate sc_rna_seq_v2
 
 # Define directory paths 
 #Adapt
-PATH_output="/data/4_sequencing_analysis/JP238/results/objects/"
-PATH_fastq="/data/4_sequencing_analysis/JP238/data/fastq/Time1_HEK_20mins_S1"
-PATH_starindexdir="/data/genomes/human/GRCh38.90_GFP_mCherry_ERCC/STAR_index_2_7_9a"
+#GEO link: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM5567775
+PATH_output="/YOURPATH/"
+PATH_fastq="/YOURPATH/fastq/Time1_HEK_20mins_S1"
+PATH_starindexdir="/YOURPATH/STAR_index_2_7_9a"
 read2_1=$PATH_fastq/"Time1_HEK_20mins_S1_R2_001.fastq.gz"
 read1_1=$PATH_fastq/"Time1_HEK_20mins_S1_R1_001.fastq.gz"
 

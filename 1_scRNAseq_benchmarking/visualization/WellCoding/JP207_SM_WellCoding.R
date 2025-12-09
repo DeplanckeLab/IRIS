@@ -13,8 +13,6 @@ library(patchwork)
 #Global Variables
 #####
 ## Cutoffs
-mapped_genome <- "human_mouse"
-#options: "human", "mouse", "droso"
 #Mote: Only a vector with two elements permitted, second item is spike-in
 species_in_Exp <- c("human","mouse")
 min_UMI <- 3000
@@ -24,14 +22,17 @@ thresh_sm <- 10
 ## PATHs
 #General experimental ID used throughout analysis
 expID <- "JP207"
-userID <- "pezoldt"
 #FolderName in experimental folder
 simple_ID <- "JP207"
 
 #Output name of scRNA-seq pipeline
 #Automatic paths
-PATH_input <- paste0("/home/",userID,"/updepla/projects/iris/4_sequencing_analysis/",expID,"/pipeline_output/",mapped_genome)
-PATH_output <- paste0("/home/",userID,"/updepla/projects/iris/4_sequencing_analysis/",expID,"/results")
+#Note: Get count matrix and QC files from GEO and unzip
+#Link: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9072151
+PATH_countmatrix <- "/YOURPATH/GSM9072151_JP207_human_mouse_UMI_all_cells_ENSG.txt"
+PATH_pivot <- "/YOURPATH/GSM9072151_JP207_human_mouse_QC.txt"
+#Output
+PATH_output <- paste0("/YOURPATH")
 PATH_output_figures <- paste0(PATH_output,"/plots")
 PATH_output_objects <- paste0(PATH_output,"/objects_transcriptome")
 PATH_output_tables <- paste0(PATH_output,"/tables")
@@ -39,8 +40,9 @@ PATH_output_tables <- paste0(PATH_output,"/tables")
 #####
 #Load sequencing data
 #####
-load(paste0(PATH_input,"/analysis/objects/objects_plotting.RData"), envir = parent.frame(), verbose = FALSE)
-ucm_lid <- UMI_all_cells_ENSG
+UMI_all_cells_SYMB <- read.delim(PATH_countmatrix)
+pivot_table <- read.delim(PATH_pivot)
+ucm_lid <- UMI_all_cells_SYMB
 colnames(ucm_lid) <- colnames(UMI_all_cells_SYMB)
 sum(as.numeric(colSums(ucm_lid) > min_UMI))
 ucm_lid <- ucm_lid[,colSums(ucm_lid) > min_UMI]
