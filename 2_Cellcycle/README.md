@@ -12,12 +12,15 @@ All additional necessary files are deposited in the following folders:
 - `utils`: Utility files/modules.
 
 ## Input data
-### Preprocessed imaging and expression data
+### .h5 dataset of preprocessed imaging and expression data
 The imaging and count matrices are available as an hdf5 dataset. The dataset contains each cell as group. For each cell the following data is available: 
 - preprocces imaging data (center cropped) of the in focus plane and +/- 1 plane are available
 - the segmentatiom mask
 - the gene expression data.
 The preprocessed data is deposited on `Zenodo` under the link: `...` and needs to be deposited in the `.\input_files`.
+
+### Additional data
+Precomputed files are available in the `.\input_files` folder so all scripts should run independently. For rerunning the whole workflow paths in the scripts where indicated need to be changed, or files in the `.\input_files` folder replaced to run files. Files that are generated from scratch are available in `.\output_files` upon execution of scripts.
 
 ## Execution extructions
 > :warning: In order to run the scripts the `fucci_final.h5` needs to be deposited in `.\input_files` as described above!
