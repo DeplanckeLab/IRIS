@@ -22,14 +22,14 @@ The preprocessed data is deposited on `Zenodo` under the link: `...` and needs t
 ### Additional data
 Precomputed files are available in the `.\input_files` folder so all scripts should run independently. For rerunning the whole workflow paths in the scripts where indicated need to be changed, or files in the `.\input_files` folder replaced to run files. Files that are generated from scratch are available in `.\output_files` upon execution of scripts.
 
-## Execution extructions
+## Execution instructions (order)
 > :warning: In order to run the scripts the `fucci_final.h5` needs to be deposited in `.\input_files` as described above!
 ### Execution order
 The scripts are partially dependent on eachother. We provide all temporary results necessary that make the scripts executable individually. The only file necessary for this is `fucci_final.h5` For regeneration of all files we suggest the following order of execution:
 
-1. FUCCI_scRNA-seq can be fully executed except for the last cell. Produces the following files:
-2. Execution of the machine learning pipeline.
-3. Analysis of deep-learning 
+1. `1_scRNA-seq_analysis`
+2. `2_DeepLearning_pipeline`
+3. `3_DeepLearning_analysis` 
 
 ### Dependencies
 For each notebook a requirements.txt is provided to create an environment compatible with the notebooks.
