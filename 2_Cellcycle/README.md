@@ -17,7 +17,7 @@ The imaging and count matrices are available as an hdf5 dataset. The dataset con
 - preprocces imaging data (center cropped) of the in focus plane and +/- 1 plane are available
 - the segmentatiom mask
 - the gene expression data.
-The preprocessed data is deposited on `Zenodo` under the link: `...` and needs to be deposited in the `.\input_files`.
+The preprocessed data is deposited on `Zenodo` under the link: `[...](https://zenodo.org/records/17864950?preview=1&token=eyJhbGciOiJIUzUxMiIsImlhdCI6MTc2NTI4MjM1NiwiZXhwIjoxNzk4Njc1MTk5fQ.eyJpZCI6IjRkNDU0MjMyLTgzYTUtNDFhZS04OGQ0LTBhY2ZjZjcxZjQ5NyIsImRhdGEiOnt9LCJyYW5kb20iOiI5MTFiOTUyMWQ0YTliMGRkZWNkZTQwMTk5NDA4NjRiYyJ9.KeNdIvWJE2Nnd6SCAcCYRsYgMW51cRx8G8j5_K7GxfpPJ3WJHVgnyaJrILvHe7bRYv8thKsp2MWDsoLN8JxWtA)` and needs to be deposited in the `.\input_files`.
 
 ### Additional data
 Precomputed files are available in the `.\input_files` folder so all scripts should run independently. For rerunning the whole workflow paths in the scripts where indicated need to be changed, or files in the `.\input_files` folder replaced to run files. Files that are generated from scratch are available in `.\output_files` upon execution of scripts.
