@@ -1,7 +1,7 @@
 # Image to transcriptome modelling
-
+This folder containes all scripts to train the cell shape CNN, nucleus CNN, and fucci angle MLP. In the script the data is directly loaded from the hdf5 dataset, i.e. `fucci_final.h5`, and split into training, validation, and test datasets. The models are trained for a predetermined number of seeds. Test correlation are calculated within batches and are averaged across batches to avoid batch effect artifacts. 
 ### Utilization
-This folder containes all scripts to train the cell shape CNN, nucleus CNN, and fucci angle MLP. Scripts are run in the following order:
+Scripts are run in the following order:
 
 1. Training of models (see Traning the model):
     - CNN models: `image2transcriptome.py`
