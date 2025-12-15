@@ -16,9 +16,6 @@ PATH_fastq="/YOURPATH/fastq"
 PATH_starindexdir="/data/genome/homo_sapiens/GRCh38.104/STAR_Index"
 read2_1=$PATH_fastq/"HEK_10X_S6_R2_001.fastq.gz"
 read1_1=$PATH_fastq/"HEK_10X_S6_R1_001.fastq.gz"
-#read2_2=$PATH_fastq/"hgmm_1k_v3_S1_L002_R2_001.fastq.gz"
-#read1_2=$PATH_fastq/"hgmm_1k_v3_S1_L002_R1_001.fastq.gz"
-
 
 #Permanent
 cellcodes_wl="YOURPATH/10X_genomics/low_throughput_9K-green19-LT-dev.txt"
