@@ -170,6 +170,16 @@ def gen_montage_multich(cell_id_list, channel, h5_path, anno_list = None, ch_sep
 
         return rgba_img
 
+def norm_minmax(img, verbose=True):
+    if verbose:
+        print(f'Image min {np.min(img)} max {np.max(img)}')
+    img_max = np.max(img)
+    if img_max > 0:
+        if verbose:
+            print('correcting')
+        img = (img - np.min(img))/(np.max(img)-np.min(img))
+    return img
+
 print(f"[sc_utils] Using scikit-image version: {ski.__version__}")
 print(f"[sc_utils] Using cv2 version: {cv2.__version__}")
 
