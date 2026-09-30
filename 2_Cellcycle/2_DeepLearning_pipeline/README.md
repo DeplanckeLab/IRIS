@@ -3,7 +3,7 @@ This folder containes all scripts to train the cell shape CNN, nucleus CNN, and 
 
 ### Revision notes
 - :warning: `fucci_final.h5` to be replaced by `fucci_final_nucmask.h5` available on Zenodo.
-- :warning: `compile_scores.ipynb` is legacy notebook. Use compile_scores_revision.ipynb instead.
+- :warning: `compile_scores.ipynb` is legacy notebook. Use `compile_scores_revision.ipynb` instead.
 - :warning: Now defaults to GaussNoise probability 0.1.
 
 ### Utilization
@@ -69,6 +69,7 @@ Description of the main arguments:
 
 **About the other scripts**
 - :warning: `loo_image2transcriptome_feature.py` is legacy and does not train the feature RF models. They are available elsewhere.
+- 
 The script `loo_image2transcriptome_feature.py` similarly trains baseline models based on predefined features that can be specified via the `feature_name` argument (supported arguments: `size`, `roundness`, `eccentricity`, `axis_minor`, and `axis_major`).
 
 ---
