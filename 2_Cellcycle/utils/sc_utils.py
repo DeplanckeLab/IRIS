@@ -91,8 +91,11 @@ def get_image_by_cid(cell_id_list, channel, h5_path):
             img_dict[cell_id] = rgba_img
     return img_dict
 
-def gen_montage_multich(cell_id_list, channel, h5_path, anno_list = None, ch_sep=False, verbose=True):
-    img_dict = {ch: [] for ch in channel.keys()}
+import matplotlib.pyplot as plt
+
+def gen_montage_multich(cell_id_list, channel, h5_path, anno_list = None, ch_sep=False, verbose=True, crop_factor=0):
+    print("v3 crop")
+    img_dict = {ch: [] for ch in channel.keys()} 
     with h5py.File(h5_path, 'r') as dataset:
         if anno_list == 'cid':
             anno_list = cell_id_list
@@ -103,8 +106,16 @@ def gen_montage_multich(cell_id_list, channel, h5_path, anno_list = None, ch_sep
             for ch in channel:
                 cell_ds = dataset[str(cell_id)]
                 foc_plane = str((cell_ds.attrs['focal_plane']))
-                img = cell_ds[ch][foc_plane][()]/256
-                img = img.astype('uint8')
+                img = cell_ds[ch][foc_plane][()]
+                if crop_factor != 0:
+                    y,x = img.shape
+                    startx = x//2 - crop_factor//2
+                    starty = y//2 - crop_factor//2
+                    img = img[starty:starty+crop_factor, startx:startx+crop_factor]
+
+                #if np.max(img) != 1:
+                #    img = img/255
+                #img = img.astype('uint8')
 
                 if channel[ch]["norm"] and not channel[ch]["col"] == "grey":
                     img = norm_minmax(img, verbose=verbose)
@@ -112,6 +123,8 @@ def gen_montage_multich(cell_id_list, channel, h5_path, anno_list = None, ch_sep
                     c_mean = np.mean(img)
                     adj_fact = 150 / c_mean if c_mean > 0 else 1
                     img = np.clip(img*adj_fact, 0, 255)/255#.astype(np.uint8)
+
+                img.astype('float')
 
                 img_dict[ch].append(img)
 
@@ -146,6 +159,10 @@ def gen_montage_multich(cell_id_list, channel, h5_path, anno_list = None, ch_sep
                 rgba_img[..., 0] = img_mon
                 rgba_img[..., 1] = img_mon
                 rgba_img[..., 2] = img_mon
+
+            if img_color == "viridis":
+                rgba_img = plt.colormaps["viridis"](img_mon)
+
                 
             img_dict[ch] = rgba_img
 
@@ -167,6 +184,14 @@ def gen_montage_multich(cell_id_list, channel, h5_path, anno_list = None, ch_sep
             
             if img_color == "blue":
                 rgba_img[..., 2] = img_mon
+
+            if img_color == "virdis":
+                print(img_mon)
+                rgba_img = plt.colormaps["viridis"](img_mon)
+                print(rgba_img)
+
+            print("org: ", img_mon)
+            print("1",img_color, rgba_img)
 
         return rgba_img
 
