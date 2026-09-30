@@ -1,16 +1,21 @@
 # Image to transcriptome modelling
-### Revision notes
-:warning: **`fucci_final.h5` to be replaced by `fucci_final_nucmask.h5` available on Zenodo.**
-:warning: **`compile_scores.ipynb` is legacy notebook. Use compile_scores_revision.ipynb instead.**
-
 This folder containes all scripts to train the cell shape CNN, nucleus CNN, and fucci angle MLP. In the script the data is directly loaded from the hdf5 dataset, i.e. `fucci_final.h5`, and split into training, validation, and test datasets. The models are trained for a predetermined number of seeds. Test correlation are calculated within batches and are averaged across batches to avoid batch effect artifacts. 
+
+### Revision notes
+- :warning: **`fucci_final.h5` to be replaced by `fucci_final_nucmask.h5` available on Zenodo.**
+- :warning: **`compile_scores.ipynb` is legacy notebook. Use compile_scores_revision.ipynb instead.**
+- :warning: **Now defaults to GaussNoise probability 0.1**
+
 ### Utilization
+- :warning: **Feature RF training is not contained in this folder**
 Scripts are run in the following order:
 
 1. Training of models (see Traning the model):
     - CNN models: `image2transcriptome.py`
-        - On Hoechst '405' for the nucleus shape model.
+        - On Hoechst '405' for the nucleus image model.
+        - On Brighfield 'bf' for the brightfield model.
         - On the segmentation mask 'seg' for the cell shape model.
+        - On Brighfield 'nucmask' for the nucleus shape model.
     - MLP models: `image2transcriptome_feature.py`
 2. Results are then compiled in the following notebook: `compile_scores.ipynb`
 
@@ -63,6 +68,7 @@ Description of the main arguments:
 * Other parameters include `bs` (batch size), `epochs` (maximum number of training epochs), `lr` (learning rate), and `wd` (weight decay).
 
 **About the other scripts**
+- :warning: **`loo_image2transcriptome_feature.py` is legacy and does not train the feature RF models. They are available elsewhere.**
 The script `loo_image2transcriptome_feature.py` similarly trains baseline models based on predefined features that can be specified via the `feature_name` argument (supported arguments: `size`, `roundness`, `eccentricity`, `axis_minor`, and `axis_major`).
 
 ---
@@ -70,15 +76,23 @@ The script `loo_image2transcriptome_feature.py` similarly trains baseline models
 ### Example calls
 Nucleus CNN model:
 ~~~
-python image2transcriptome.py --data_dir ../input_files --out_dir ./results --dataset fucci_final --channel '405' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+python image2transcriptome.py --data_dir ../input_files --out_dir ./results_rev_p01 --dataset fucci_final --channel '405' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+~~~
+Nucleus shape CNN model:
+~~~
+python image2transcriptome.py --data_dir ../input_files --out_dir ./results_rev_p01 --dataset fucci_final --channel 'nucmask' --train_augmentations 'random_rotation' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
 ~~~
 Cell shape CNN model:
 ~~~
-python image2transcriptome.py --data_dir ../input_files --out_dir ./results --dataset fucci_final --channel 'seg' --train_augmentations 'random_rotation' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+python image2transcriptome.py --data_dir ../input_files --out_dir ./results_rev_p01 --dataset fucci_final --channel 'seg' --train_augmentations 'random_rotation' --save_model --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+~~~
+Brightfield CNN model
+~~~
+python image2transcriptome.py --data_dir ../input_files --out_dir ./results_rev_p01 --dataset fucci_final_nucmask --channel 'bf' --save_model --species 'mouse' --device 1 --seeds 0 1 2 3 4 --random_split
 ~~~
 Angular MLP model
 ~~~
-python image2transcriptome_feature.py --data_dir ../input_files --out_dir ./results --dataset fucci_final --channels 488 561 seg --fit_method mlp --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
+python image2transcriptome_feature.py --data_dir ../input_files --out_dir ./results_rev_p01 --dataset fucci_final --channels 488 561 seg --fit_method mlp --species 'mouse' --device 0 --seeds 0 1 2 3 4 --random_split
 ~~~
 ---
 
