@@ -79,7 +79,7 @@ class IndexedImage2TranscriptomeDataset(Dataset):
             augmentations = [
                 A.HorizontalFlip(p=0.5),
                 A.RandomBrightnessContrast(p=0.2, brightness_limit = (-0.01, 0.01), contrast_limit =  (-0.01, 0.01)),
-                A.GaussNoise(std_range=(0.005, 0.01), p=1.0),
+                A.GaussNoise(std_range=(0.005, 0.01), p=0.1),
                 A.Rotate(p=0.5),
             ]
             transforms.extend(augmentations)
