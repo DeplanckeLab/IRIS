@@ -1,0 +1,11 @@
+# Local environments and notebook execution products
+.ipynb_checkpoints/
+build/
+.conda/
+
+# User-supplied raw image/transcriptome store
+*.h5
+*.hdf5
+
+# Notebook 01 stages complete regeneration runs here for manual review
+/outputs/rerun/

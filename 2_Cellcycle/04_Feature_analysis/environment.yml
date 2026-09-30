@@ -1,0 +1,27 @@
+name: pubtestenv
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - nbconvert
+  - ipykernel
+  - ipython
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - matplotlib-venn
+  - gseapy
+  - h5py
+  - anndata
+  - scikit-image
+  - opencv
+  - scanpy
+  - statsmodels
+  - tqdm
+  - shap
+  - pip
+  - pip:
+      - cp_measure
