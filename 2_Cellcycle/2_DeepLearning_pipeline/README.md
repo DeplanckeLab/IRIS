@@ -2,12 +2,12 @@
 This folder containes all scripts to train the cell shape CNN, nucleus CNN, and fucci angle MLP. In the script the data is directly loaded from the hdf5 dataset, i.e. `fucci_final.h5`, and split into training, validation, and test datasets. The models are trained for a predetermined number of seeds. Test correlation are calculated within batches and are averaged across batches to avoid batch effect artifacts. 
 
 ### Revision notes
-- :warning: **`fucci_final.h5` to be replaced by `fucci_final_nucmask.h5` available on Zenodo.**
-- :warning: **`compile_scores.ipynb` is legacy notebook. Use compile_scores_revision.ipynb instead.**
-- :warning: **Now defaults to GaussNoise probability 0.1**
+- :warning: `fucci_final.h5` to be replaced by `fucci_final_nucmask.h5` available on Zenodo.
+- :warning: `compile_scores.ipynb` is legacy notebook. Use compile_scores_revision.ipynb instead.
+- :warning: Now defaults to GaussNoise probability 0.1
 
 ### Utilization
-- :warning: **Feature RF training is not contained in this folder**
+- :warning: Feature RF training is not contained in this folder
 Scripts are run in the following order:
 
 1. Training of models (see Traning the model):
