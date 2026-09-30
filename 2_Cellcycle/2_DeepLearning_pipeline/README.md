@@ -69,7 +69,7 @@ Description of the main arguments:
 
 **About the other scripts**
 - :warning: `loo_image2transcriptome_feature.py` is legacy and does not train the feature RF models. They are available elsewhere.
-- 
+
 The script `loo_image2transcriptome_feature.py` similarly trains baseline models based on predefined features that can be specified via the `feature_name` argument (supported arguments: `size`, `roundness`, `eccentricity`, `axis_minor`, and `axis_major`).
 
 ---
