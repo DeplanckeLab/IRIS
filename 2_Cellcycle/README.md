@@ -21,13 +21,13 @@ The imaging and count matrices are available as an hdf5 dataset. This dataset wa
 - the nucleus segmentation mask
 - the gene expression data.
 
-The preprocessed data is deposited on Zenodo under the link: [fucci_final.h5](https://zenodo.org/records/17864950?preview=1&token=eyJhbGciOiJIUzUxMiIsImlhdCI6MTc2NTI4MjM1NiwiZXhwIjoxNzk4Njc1MTk5fQ.eyJpZCI6IjRkNDU0MjMyLTgzYTUtNDFhZS04OGQ0LTBhY2ZjZjcxZjQ5NyIsImRhdGEiOnt9LCJyYW5kb20iOiI5MTFiOTUyMWQ0YTliMGRkZWNkZTQwMTk5NDA4NjRiYyJ9.KeNdIvWJE2Nnd6SCAcCYRsYgMW51cRx8G8j5_K7GxfpPJ3WJHVgnyaJrILvHe7bRYv8thKsp2MWDsoLN8JxWtA) and needs to be deposited in the `.\input_files`. The feature-analysis revision additionally requires `fucci_final_nucmask.h5`, as documented in `04_Feature_analysis/README.md`.
+The preprocessed data is deposited on Zenodo under the link: [fucci_final.h5 and fucci_final_nucmask.h5](https://zenodo.org/records/17864950?preview=1&token=eyJhbGciOiJIUzUxMiIsImlhdCI6MTc2NTI4MjM1NiwiZXhwIjoxNzk4Njc1MTk5fQ.eyJpZCI6IjRkNDU0MjMyLTgzYTUtNDFhZS04OGQ0LTBhY2ZjZjcxZjQ5NyIsImRhdGEiOnt9LCJyYW5kb20iOiI5MTFiOTUyMWQ0YTliMGRkZWNkZTQwMTk5NDA4NjRiYyJ9.KeNdIvWJE2Nnd6SCAcCYRsYgMW51cRx8G8j5_K7GxfpPJ3WJHVgnyaJrILvHe7bRYv8thKsp2MWDsoLN8JxWtA) and needs to be deposited in the `.\input_files`. The feature-analysis revision requires `fucci_final_nucmask.h5`, as documented in `04_Feature_analysis/README.md`.
 
 ### Additional data
 Precomputed files are available in the `.\input_files` folder so all scripts should run independently. For rerunning the whole workflow paths in the scripts where indicated need to be changed, or files in the `.\input_files` folder replaced to run files. Files that are generated from scratch are available in `.\output_files` upon execution of scripts.
 
 ## Execution instructions (order)
-> :warning: The original workflow requires `fucci_final.h5`; `04_Feature_analysis` requires `fucci_final_nucmask.h5` or `FUCCI_H5_PATH`.
+> :warning: The original workflow requires `fucci_final.h5` or `fucci_final_nucmask.h5`; `04_Feature_analysis` requires `fucci_final_nucmask.h5`.
 ### Execution order
 The workflows are partially dependent on each other. Precomputed intermediate results allow them to run independently; for full regeneration, use the following order:
 
